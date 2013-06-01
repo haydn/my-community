@@ -125,21 +125,19 @@
 
         var update = function() {
 
-          var a = items.map(function(d) {
+          var data = items.map(function(d) {
             return $.extend(d, { distance: distanceBetweenLocations(location, d) });
           }).filter(function(d) {
             return d.distance < 10000;
           });
 
-          nearByData = items
-
-          var nearByData = d3.nest()
+          var nestedData = d3.nest()
             .key(function(d) {
               return d.type;
             })
-            .entries(nearByData);
+            .entries(data);
 
-          var groupSelection = itemLayer.selectAll("g").data(nearByData).enter().append("g");
+          var groupSelection = itemLayer.selectAll("g").data(nestedData).enter().append("g");
           var itemSelection = groupSelection.selectAll("g").data(function(d) {
               return d.values;
             }, function(d) {
