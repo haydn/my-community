@@ -35,7 +35,70 @@
         var projection = d3.geo.mercator()
           .center([ location.longitude, location.latitude ])
           // .scale(1000);
-          .scale(100000);
+          .scale(1000000);
+
+        var itemTypes = {
+          "Arts": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          },
+          "Club": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          },
+          "Education": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          },
+          "Library": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          },
+          "Sport": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          },
+          "Volunteer": function(selection) {
+            selection
+              .append("rect")
+              .attr({
+                width: 20,
+                height: 20,
+                x: -10,
+                y: -10
+              });
+          }
+        }
 
         var distanceBetweenLocations = function(location1, location2) {
           var lat1 = Number(location1.latitude);
@@ -62,52 +125,59 @@
 
         var update = function() {
 
-          items.forEach(function(d) {
-            d.distance = distanceBetweenLocations(location, d);
-          });
-
-          nearByData = items.filter(function(d) {
+          var a = items.map(function(d) {
+            return $.extend(d, { distance: distanceBetweenLocations(location, d) });
+          }).filter(function(d) {
             return d.distance < 10000;
           });
 
-          var select = itemLayer.selectAll("g").data(nearByData, function(d) {
-            return d.id;
-          });
+          nearByData = items
 
-          var entered = select.enter().append("g");
+          var nearByData = d3.nest()
+            .key(function(d) {
+              return d.type;
+            })
+            .entries(nearByData);
 
-          var exited = select.exit();
+          var groupSelection = itemLayer.selectAll("g").data(nearByData).enter().append("g");
+          var itemSelection = groupSelection.selectAll("g").data(function(d) {
+              return d.values;
+            }, function(d) {
+              return d.id;
+            });
+
+          var entered = itemSelection.enter().append("g");
+
+          var exited = itemSelection.exit();
 
           locator.attr("transform", function() {
             var correctedLocation = projection([ location.longitude, location.latitude ]);
             return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
           });
 
-          select
+          itemSelection
             .transition()
             .call(positionSelection);
 
           entered.call(positionSelection);
 
-          entered.filter(function(d, i) {
-            return d.type == "library";
-          }).append("rect")
+          entered.call(function(d,i) {
+            d.type = "example";
+          });
+
+          // entered.each(function(d,i) {
+          //   // console.log(d);
+          //   // itemTypes[d.type](this);
+          // });
+
+          entered
+            .append("rect")
             .attr({
               width: 20,
               height: 20,
               x: -10,
               y: -10
             });
-
-          entered.filter(function(d, i) {
-            return d.type == "example";
-          }).append("circle")
-            .attr("r", 10);
-
-          entered.filter(function(d, i) {
-            return d.type == "Community";
-          }).append("circle")
-            .attr("r", 10);
 
           exited.remove();
 
@@ -118,8 +188,10 @@
             .attr("d", d3.geo.path().projection(projection));
         };
 
-        // d3.csv("data/communities.csv", function(error, data) {
-        d3.csv("data/example.csv", function(error, data) {
+        d3.csv("data/gazetter_sa-sorted.csv", function(error, data) {
+        // d3.csv("data/adult-education.csv", function(error, data) {
+        // d3.csv("data/communities-2.csv", function(error, data) {
+        // d3.csv("data/example.csv", function(error, data) {
           items = items.concat(data);
           update();
         });
