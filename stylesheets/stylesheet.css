@@ -73,6 +73,9 @@ body {
 /* ==========================================================================
    Links
    ========================================================================== */
+a {
+  text-decoration: none; }
+
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
  */
@@ -89,13 +92,20 @@ a:hover {
 /* ==========================================================================
    Typography
    ========================================================================== */
+p {
+  margin: 0;
+  padding: 0 0 16px 0; }
+
 /**
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari 5, and Chrome.
  */
 h1 {
-  font-size: 2em;
-  margin: 0.67em 0; }
+  font-size: 2em; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0; }
 
 /**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
@@ -412,6 +422,8 @@ table {
       height: 80px; }
     .community-details--section > div > div:first-child {
       border-bottom: 1px solid #000; }
+  .community-details--section p {
+    padding: 0; }
 
 .map {
   position: relative;
