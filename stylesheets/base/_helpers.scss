@@ -8,6 +8,12 @@
   float: right;
 }
 
+// CLEARS
+
+.clear {
+  clear: both;
+}
+
 // WIDTHS
 
 @mixin grid-setup($namespace: "") {
@@ -107,11 +113,6 @@
     @media (min-width: 500px) and (max-width: 960px) {
       .#{$namespace}one-quarter       { width:50%; }
       .#{$namespace}three-quarters    { width:50%; }
-    }
-
-    @include media-query(palm) {
-      .#{$namespace}three-quarters,
-      .#{$namespace}one-quarter        { width: 100%; }
     }
 }
 
