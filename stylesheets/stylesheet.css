@@ -433,13 +433,38 @@ table {
   margin-right: 16px;
   width: 590px;
   position: relative;
-  z-index: 3;
+  z-index: 3; }
+
+.around-me--nav a {
   background: #fff;
+  padding: 16px;
+  color: #222;
+  display: block;
+  z-index: 4;
+  position: relative; }
+  .around-me--nav a + a {
+    margin-left: -10px; }
+  .around-me--nav a.around-me--nav--active {
+    color: #000;
+    z-index: 5; }
+
+.around-me--section {
+  clear: both;
+  background: #fff;
+  padding: 16px;
   -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   -ms-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 0 10px 10px 10px;
+  -moz-border-radius: 0 10px 10px 10px;
+  -ms-border-radius: 0 10px 10px 10px;
+  -o-border-radius: 0 10px 10px 10px;
+  border-radius: 0 10px 10px 10px; }
+
+.location {
+  background: whitesmoke;
   padding: 16px; }
 
 .inner-wrapper {
