@@ -1,0 +1,82 @@
+!table
+!version 300
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 75
+    osm_id Integer ;
+    ref_INSEE Char (254) ;
+    ref_sandre Char (254) ;
+    fixme Char (254) ;
+    note Char (254) ;
+    validate_no_name Char (254) ;
+    validate_no_ref Char (254) ;
+    validate_my_own Char (254) ;
+    protect_id Char (254) ;
+    access Char (254) ;
+    addr_housename Char (254) ;
+    addr_housenumber Char (254) ;
+    addr_interpolation Char (254) ;
+    admin_level Char (254) ;
+    aerialway Char (254) ;
+    aeroway Char (254) ;
+    amenity Char (254) ;
+    area Char (254) ;
+    barrier Char (254) ;
+    bicycle Char (254) ;
+    brand Char (254) ;
+    bridge Char (254) ;
+    boundary Char (254) ;
+    building Char (254) ;
+    construction Char (254) ;
+    covered Char (254) ;
+    culvert Char (254) ;
+    cutting Char (254) ;
+    denomination Char (254) ;
+    disused Char (254) ;
+    embankment Char (254) ;
+    foot Char (254) ;
+    generator_source Char (254) ;
+    harbour Char (254) ;
+    highway Char (254) ;
+    historic Char (254) ;
+    horse Char (254) ;
+    intermittent Char (254) ;
+    junction Char (254) ;
+    landuse Char (254) ;
+    layer Char (254) ;
+    leisure Char (254) ;
+    lock Char (254) ;
+    man_made Char (254) ;
+    military Char (254) ;
+    motorcar Char (254) ;
+    name Char (254) ;
+    natural Char (254) ;
+    oneway Char (254) ;
+    operator Char (254) ;
+    population Char (254) ;
+    power Char (254) ;
+    power_source Char (254) ;
+    place Char (254) ;
+    railway Char (254) ;
+    ref Char (254) ;
+    religion Char (254) ;
+    route Char (254) ;
+    service Char (254) ;
+    shop Char (254) ;
+    sport Char (254) ;
+    surface Char (254) ;
+    toll Char (254) ;
+    tourism Char (254) ;
+    tower_type Char (254) ;
+    tracktype Char (254) ;
+    tunnel Char (254) ;
+    water Char (254) ;
+    waterway Char (254) ;
+    wetland Char (254) ;
+    width Char (254) ;
+    wood Char (254) ;
+    z_order Integer ;
+    way_area Float ;
+    tags Char (254) ;
