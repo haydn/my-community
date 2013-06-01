@@ -5,7 +5,7 @@ if [ -f data/processed/subunits.json ]
     rm data/processed/subunits.json
 fi
 
-ogr2ogr -f GeoJSON data/processed/subunits.json data/unprocessed/MajorRoads.shp
+ogr2ogr -f GeoJSON -where "TYPE IN ('primary', 'secondary', 'tertiary')" data/processed/subunits.json data/unprocessed/south_australia_highway.shp -clipsrc 138.57 -34.945 138.64 -34.88
 
 if [ -f data/processed/subunits.json ]
   then

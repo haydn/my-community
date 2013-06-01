@@ -13,16 +13,20 @@
   </head>
   <body>
     <form id="form">
-      <input type="text" name="address"/>
+      <input type="text" name="address" value="adelaide, sa"/>
+      <input type="text" name="scale" value="1000000"/>
       <input type="submit" value="Go"/>
     </form>
     <svg width="100%" height="720" style="float:left;">
       <g id="mapLayer">
         <path fill="#eee" stroke="#000" />
       </g>
+      <g id="roadLayer">
+        <path stroke="#ccc" fill="none" stroke-width="2"/>
+      </g>
       <g id="itemLayer"/>
       <g id="locator">
-        <circle cx="0" cy="0" fill="red" r="2"/>
+        <circle cx="0" cy="0" fill="red" r="4"/>
       </g>
     </svg>
     <div id="panel" style="position:absolute; top:20px; right:20px; width:300px; background:#ccc; padding: 10px;">

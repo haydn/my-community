@@ -8,31 +8,34 @@ $(function() {
   // Inputs.
   var $form = $("#form");
   var $addressInput = $form.find("input[name='address']");
+  var $scaleInput = $form.find("input[name='scale']");
   var $panel = $("#panel");
   // Data.
   var types = [];
   var items = [];
   var map = [];
+  var roads = [];
   var location = { latitude: -34.92862119999999, longitude: 138.5999594 };
+  var scale = 1000000;
   // Helpers.
   var geocoder = new google.maps.Geocoder();
   var projection;
 
-  var distanceBetweenLocations = function(location1, location2) {
-    var lat1 = Number(location1.latitude);
-    var lat2 = Number(location2.latitude);
-    var long1 = Number(location1.longitude);
-    var long2 = Number(location2.longitude);
-    var R = 6371; // km
-    var dLat = (lat2-lat1).toRad();
-    var dLon = (long2-long1).toRad();
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c;
-    return d;
-  };
+  // var distanceBetweenLocations = function(location1, location2) {
+  //   var lat1 = Number(location1.latitude);
+  //   var lat2 = Number(location2.latitude);
+  //   var long1 = Number(location1.longitude);
+  //   var long2 = Number(location2.longitude);
+  //   var R = 6371; // km
+  //   var dLat = (lat2-lat1).toRad();
+  //   var dLon = (long2-long1).toRad();
+  //   var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+  //           Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+  //           Math.sin(dLon/2) * Math.sin(dLon/2);
+  //   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  //   var d = R * c;
+  //   return d;
+  // };
 
   var positionSelection = function(selection) {
     selection.attr("transform", function(d,i) {
@@ -61,13 +64,13 @@ $(function() {
         });
     }
 
-    data = data.map(function(d) {
-        return $.extend(d, { distance: distanceBetweenLocations(location, d) });
-      });
-
-    data = data.filter(function(d) {
-        return d.distance < 10000;
-      });
+    // data = data.map(function(d) {
+    //     return $.extend(d, { distance: distanceBetweenLocations(location, d) });
+    //   });
+    //
+    // data = data.filter(function(d) {
+    //     return d.distance < 10000;
+    //   });
 
     data = d3.nest()
       .key(function(d) {
@@ -83,15 +86,16 @@ $(function() {
       // TODO: Make half the width of the SVG or something along those lines.
       .translate([ 480, 380])
       .center([ location.longitude, location.latitude ])
-      // .scale(100000);
-      .scale(1000000);
+      .scale(scale);
   };
 
   var updateMap = function() {
     mapLayer.select("path")
       .datum(map)
-      .attr("fill", "#eee")
-      .attr("stroke", "#000")
+      .attr("d", d3.geo.path().projection(projection));
+
+    d3.select("#roadLayer").select("path")
+      .datum(roads)
       .attr("d", d3.geo.path().projection(projection));
   };
 
@@ -120,6 +124,9 @@ $(function() {
 
     entered
       .call(positionSelection)
+      .attr("id", function(d){
+        return d.id;
+      })
       .append("image")
       .attr("xlink:href", function(d,i) {
         return types[d.type].icon;
@@ -135,12 +142,14 @@ $(function() {
   };
 
   var updatePanel = function(data) {
-    panel.select("ul").selectAll("input").data(data)
+    var li = panel.select("ul").selectAll("input").data(data)
       .enter()
-      .append("li")
+      .append("li");
+
+    li
       .append("label")
       .text(function(d) {
-        return types[d.key].labell;
+        return types[d.key].label;
       })
       .append("input")
       .attr({
@@ -151,6 +160,16 @@ $(function() {
         checked: true
       }).on("change", function(d,i) {
         update();
+      });
+
+    li
+      .append("img")
+      .attr({
+        src: function(d,i) {
+          return types[d.key].icon;
+        },
+        width: 20,
+        height: 20
       });
   };
 
@@ -184,23 +203,35 @@ $(function() {
     items = items.concat(data);
     update();
   });
-  d3.csv("data/processed/communities.csv", function(error, data) {
-    items = items.concat(data);
-    update();
-  });
+
+  // d3.csv("data/processed/communities.csv", function(error, data) {
+  //   items = items.concat(data);
+  //   update();
+  // });
+
   // d3.csv("data/processed/example.csv", function(error, data) {
   //   items = items.concat(data);
   //   update();
   // });
 
   d3.json("data/processed/map.json", function(error, data) {
-  // d3.json("data/processed/roads.json", function(error, data) {
     map = topojson.feature(data, data.objects.subunits);
-    update();
+    updateProjection();
+    updateMap();
+  });
+
+  d3.json("data/processed/roads.json", function(error, data) {
+    roads = topojson.feature(data, data.objects.subunits);
+    updateProjection();
     updateMap();
   });
 
   $form.find("input[type='submit']").on("click", function(event) {
+
+    scale = Number($scaleInput.val());
+
+    update();
+    updateMap();
 
     geocoder.geocode({ address: $addressInput.val() }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
