@@ -9,6 +9,7 @@
     <script type="text/javascript" src="javascripts/topojson.v1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/application.js" charset="utf-8"></script>
     <script type="text/javascript" src="data/processed/abs.json" charset="utf-8"></script>
     <script type="text/javascript">
       /** Converts numeric degrees to radians */
@@ -129,8 +130,8 @@
 
         };
 
-        d3.csv("data/communities.csv", function(error, data) {
-        // d3.csv("data/example.csv", function(error, data) {
+        d3.csv("data/processed/communities.csv", function(error, data) {
+        // d3.csv("data/processed/example.csv", function(error, data) {
           allData = allData.concat(data);
           update();
         });
@@ -193,33 +194,33 @@
         <div class="community-details--section" id="community-details--people">
           <div>
             <div>
-              <h3>12,637</h3>
+              <h3 id="resident-total">12,637</h3>
               <p>Residents</p>
             </div>
             <div>
-              <h3>6,704</h3>
+              <h3 id="resident-men">6,704</h3>
               <p>Men</p>
-              <h3>5,935</h3>
+              <h3 id="resident-women">5,935</h3>
               <p>Women</p>
             </div>
           </div>
           <div>
             <div>
-              <h3 class="community-details--highlight">29</h3>
+              <h3 class="community-details--highlight" id="resident-median-age">29</h3>
               <p>Median</p>
               <h3>Age</h3>
             </div>
-            <div class="community-details--icon icon-families">
+            <div class="community-details--icon icon-families" id="resident-married">
               <h3>2,094</h3>
               <p>Married</p>
             </div>
           </div>
           <div>
-            <div class="community-details--icon icon-singles">
+            <div class="community-details--icon icon-singles" id="resident-not-married">
               <h3>6,192</h3>
               <p>Not Married</p>
             </div>
-            <div class="community-details--icon icon-families">
+            <div class="community-details--icon icon-families" id="resident-de-facto">
               <h3>1,129</h3>
               <p>De Facto</p>
             </div>
@@ -227,11 +228,11 @@
           <div>
             <div>
               <h4>$</h4>
-              <h3>498<small>.00</small></h3>
+              <h3 id="resident-weekly-income">498<small>.00</small></h3>
               <p>Weekly Income</p>
             </div>
             <div class="community-detils--icon icon-australia">
-              <h3>6,583</h3>
+              <h3 id="resident-australian-residents">6,583</h3>
               <p>Aust. Residents</p>
             </div>
           </div>
