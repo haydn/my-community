@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8"/>
     <title>My Community</title>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdMu7yxgGE_OGV8wzfAGPs3XmP-5NlMGc&sensor=true" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/topojson.v1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
     <script type="text/javascript">
       /** Converts numeric degrees to radians */
       if (typeof(Number.prototype.toRad) === "undefined") {
@@ -49,26 +50,71 @@
         var update = function() {
           $main.empty();
           $main.prepend('<p>Your location: '+location.latitude+','+location.longitude+'</p>');
-          // TODO: D3 here.
-          dataLayer.selectAll("circle")
-            .data(allData)
+
+          _.each(allData, function(d) {
+            d.distance = distanceBetweenLocations(location, d);
+            // console.log(d.distance);
+          });
+
+          nearByData = _.find(allData, function(d) {
+            console.log(d.distance < 20);
+            // return d.distance < 20;
+          });
+
+          var select = dataLayer.selectAll("circle").data(allData, function(d) {
+            return d.id+"@"+location.latitude+","+location.longitude;
+          });
+
+          // var nearBy = select.filter(function(d, i) {
+          //   console.log(d.distance);
+          //   return d.distance < 100;
+          // });
+
+          select
             .enter()
             .append("circle")
             .attr({
+              fill: "red"
+            });
+
+          var inner = select.filter(function(d, i) {
+            return d.distance <= 5;
+          }).attr({
+            fill: "green"
+          });
+
+          var outer = select.filter(function(d, i) {
+            return d.distance > 5;
+          }).attr({
+            fill: "blue"
+          });
+
+          select
+            .attr({
               cx: function(d) {
-                var distance = distanceBetweenLocations(location, d);
-                return 480+distance*20;
+                return 480+d.distance*20;
               },
               cy: 360,
-              fill: "red",
-              r: 10
-            });
-          $.each(allData, function(index,datum) {
-            var distance = distanceBetweenLocations(location, datum);
-            $main.append('<p>'+datum.type+','+datum.latitude+','+datum.longitude+','+distance+'</p>');
+              r: 0
+            })
+            .transition()
+            .duration(1000)
+            .attr({ r: 10 });
+
+          select
+            .exit()
+            // .transition()
+            // .duration(1000)
+            // .attr({ r: 0 })
+            .remove();
+
+          $.each(allData, function(index,d) {
+            var distance = distanceBetweenLocations(location, d);
+            $main.append('<p>'+d.id+': '+distance+'</p>');
           });
         };
 
+        // d3.csv("data/communities.csv", function(error, data) {
         d3.csv("data/example.csv", function(error, data) {
           allData = allData.concat(data);
           update();
@@ -102,7 +148,7 @@
       <input type="text" name="address"/>
       <input type="submit" value="Go"/>
     </form>
-    <div id="main"></div>
+    <div id="main" style="width: 400px; position: absolute; top:0; right:0;"></div>
     <svg width="960" height="720">
       <g id="backgroundLayer">
         <circle cx="480" cy="360" fill="black" r="10"/>
