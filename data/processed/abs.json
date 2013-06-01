@@ -1,0 +1,17 @@
+{
+	"5000": {
+		"people": {
+			"residents": {
+				"total":"12637",
+				"men":"6704",
+				"women":"5935",
+				"median_age":"29",
+				"married":"2094",
+				"not_married":"6192",
+				"defacto":"1129",
+				"weekly_income":"498.00",
+				"australian_residents":"6583"
+			}
+		}
+	}
+}
