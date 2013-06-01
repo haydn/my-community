@@ -1,0 +1,10 @@
+.around-me {
+  float: right;
+  margin-right: $space;
+  width: 590px;
+  position: relative;
+  z-index: 3;
+  background: #fff;
+  @include box-shadow(5px 5px 5px rgba(0,0,0,0.5));
+  padding: $space;
+}

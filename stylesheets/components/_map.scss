@@ -1,0 +1,17 @@
+.map {
+  position: relative;
+  overflow: hidden;
+}
+
+.map--background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.map--radar {
+  float: left;
+  width: 40%;
+  z-index: 2;
+}
