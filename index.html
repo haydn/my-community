@@ -17,14 +17,23 @@
       }
     </script>
     <script type="text/javascript">
+      d3.selection.prototype.size = function() {
+        var n = 0;
+        this.each(function() { ++n; });
+        return n;
+      };
+    </script>
+    <script type="text/javascript">
       $(function() {
 
+        var mapLayer = d3.select("#mapLayer");
         var dataLayer = d3.select("#dataLayer");
         var $form = $("#form");
         var $main = $("#main");
         var $addressInput = $form.find("input[name='address']");
         var geocoder = new google.maps.Geocoder();
         var allData = [];
+        var mapData = [];
         // Default location is Adelaide.
         var location = {
           latitude: -34.92862119999999,
@@ -59,26 +68,21 @@
             return d.distance < 10;
           });
 
-          // DEBUGGING INFO
-
-          $main.empty();
-          $main.prepend('<p>Your location: '+location.latitude+','+location.longitude+'</p>');
-          $.each(nearByData, function(index,d) {
-            var distance = distanceBetweenLocations(location, d);
-            $main.append('<p>'+d.id+': '+distance+'</p>');
-          });
-
           // REAL
+
+          var projection = d3.geo.mercator()
+            .center([location.longitude, location.latitude])
+            .rotate([0, 0])
+            .scale(80000);
 
           var select = dataLayer.selectAll("g").data(nearByData, function(d) {
             return d.id;
           });
 
           var positionSelection = function(selection) {
-            selection.attr("transform", function(d) {
-              var x = 480+d.distance*20;
-              var y = 360+Math.random()*100-50;
-              return "translate("+x+","+y+")";
+            selection.attr("transform", function(d,i) {
+              var correctedLocation = projection([ d.longitude, d.latitude ]);
+              return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
             });
           };
 
@@ -111,25 +115,41 @@
           }).append("circle")
             .attr("r", 10);
 
-          select.filter(function(d, i) {
+          var inner = select.filter(function(d, i) {
             return d.distance <= 5;
-          }).attr({
-            fill: "green"
           });
 
-          select.filter(function(d, i) {
+          var outer = select.filter(function(d, i) {
             return d.distance > 5;
-          }).attr({
-            fill: "blue"
           });
+
+          inner.attr({
+            fill: "green"
+          }); //call(positionSelection);
+
+          outer.attr({
+            fill: "blue"
+          }); //.call(positionSelection);
 
           exited.remove();
 
+          var path = d3.geo.path().projection(projection);
+
+          mapLayer.select("path")
+              .datum(mapData)
+              .attr("d", path)
+              .attr("fill", "#eee")
+              .attr("stroke", "#000");
         };
 
         d3.csv("data/communities.csv", function(error, data) {
         // d3.csv("data/example.csv", function(error, data) {
           allData = allData.concat(data);
+          update();
+        });
+
+        d3.json("data/map.json", function(error, map) {
+          mapData = topojson.feature(map, map.objects.subunits);
           update();
         });
 
@@ -161,10 +181,10 @@
       <input type="text" name="address"/>
       <input type="submit" value="Go"/>
     </form>
-    <div id="main" style="width: 400px; position: absolute; top:0; right:0;"></div>
     <svg width="960" height="720">
+      <g id="mapLayer"><path/></g>
       <g id="backgroundLayer">
-        <circle cx="480" cy="360" fill="black" r="10"/>
+        <circle cx="480" cy="360" fill="black" r="5"/>
         <circle cx="480" cy="360" fill="none" stroke="black" r="100"/>
         <circle cx="480" cy="360" fill="none" stroke="black" r="200"/>
       </g>

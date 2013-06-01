@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>My Community</title>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdMu7yxgGE_OGV8wzfAGPs3XmP-5NlMGc&sensor=true" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/topojson.v1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      /** Converts numeric degrees to radians */
+      if (typeof(Number.prototype.toRad) === "undefined") {
+        Number.prototype.toRad = function() {
+          return this * Math.PI / 180;
+        }
+      }
+    </script>
+    <script type="text/javascript">
+      d3.selection.prototype.size = function() {
+        var n = 0;
+        this.each(function() { ++n; });
+        return n;
+      };
+    </script>
+    <script type="text/javascript">
+      $(function() {
+
+        var dataLayer = d3.select("#dataLayer");
+        var $form = $("#form");
+        var $main = $("#main");
+        var $addressInput = $form.find("input[name='address']");
+        var geocoder = new google.maps.Geocoder();
+        var allData = [];
+        // Default location is Adelaide.
+        var location = {
+          latitude: -34.92862119999999,
+          longitude: 138.5999594
+        };
+
+        var distanceBetweenLocations = function(location1, location2) {
+          var lat1 = Number(location1.latitude);
+          var lat2 = Number(location2.latitude);
+          var long1 = Number(location1.longitude);
+          var long2 = Number(location2.longitude);
+          var R = 6371; // km
+          var dLat = (lat2-lat1).toRad();
+          var dLon = (long2-long1).toRad();
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var d = R * c;
+          return d;
+        };
+
+        var update = function() {
+
+          // PREP DATA
+
+          allData.forEach(function(d) {
+            d.distance = distanceBetweenLocations(location, d);
+          });
+
+          nearByData = allData.filter(function(d) {
+            return d.distance < 10;
+          });
+
+          // DEBUGGING INFO
+
+          $main.empty();
+          $main.prepend('<p>Your location: '+location.latitude+','+location.longitude+'</p>');
+          $.each(nearByData, function(index,d) {
+            var distance = distanceBetweenLocations(location, d);
+            $main.append('<p>'+d.id+': '+distance+'</p>');
+          });
+
+          // REAL
+
+          var select = dataLayer.selectAll("g").data(nearByData, function(d) {
+            return d.id;
+          });
+
+          var positionSelection = function(selection) {
+            selection.attr("transform", function(d,i) {
+              var x = 480+d.distance*20;
+              var y = 360; //+i*(500/selection.size());
+              return "translate("+x+","+y+")";
+            });
+          };
+
+          // var groupedByDistance = d3.nest().key(function(d) {
+          //   return Math.ceil(d.distance/5)*5;
+          // }).entries(nearByData);
+          //
+          // console.log(groupedByDistance);
+
+          select
+            .transition()
+            .call(positionSelection);
+
+          var entered = select.enter().append("g");
+          var exited = select.exit();
+
+          entered.call(positionSelection);
+
+          entered.filter(function(d, i) {
+            return d.type == "library";
+          }).append("rect")
+            .attr({
+              width: 20,
+              height: 20,
+              x: -10,
+              y: -10
+            });
+
+          entered.filter(function(d, i) {
+            return d.type == "example";
+          }).append("circle")
+            .attr("r", 10);
+
+          entered.filter(function(d, i) {
+            return d.type == "Community";
+          }).append("circle")
+            .attr("r", 10);
+
+          var inner = select.filter(function(d, i) {
+            return d.distance <= 5;
+          });
+
+          var outer = select.filter(function(d, i) {
+            return d.distance > 5;
+          });
+
+          inner.attr({
+            fill: "green"
+          }); //call(positionSelection);
+
+          outer.attr({
+            fill: "blue"
+          }); //.call(positionSelection);
+
+          exited.remove();
+
+        };
+
+        // d3.csv("data/communities.csv", function(error, data) {
+        d3.csv("data/example.csv", function(error, data) {
+          allData = allData.concat(data);
+          update();
+        });
+
+        $form.find("input[type='submit']").on("click", function(event) {
+
+          geocoder.geocode({ address: $addressInput.val() }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0] && results[0].geometry && results[0].geometry.location) {
+                location = {
+                  latitude: results[0].geometry.location.jb,
+                  longitude: results[0].geometry.location.kb
+                };
+                update();
+              }
+            } else {
+              alert("Geocoder failed due to: " + status);
+            }
+          });
+
+          event.preventDefault();
+        });
+
+      });
+
+    </script>
+  </head>
+  <body>
+    <form id="form">
+      <input type="text" name="address"/>
+      <input type="submit" value="Go"/>
+    </form>
+    <div id="main" style="width: 400px; position: absolute; top:0; right:0;"></div>
+    <svg width="960" height="720">
+      <g id="backgroundLayer">
+        <circle cx="480" cy="360" fill="black" r="10"/>
+        <circle cx="480" cy="360" fill="none" stroke="black" r="100"/>
+        <circle cx="480" cy="360" fill="none" stroke="black" r="200"/>
+      </g>
+      <g id="dataLayer"/>
+    </svg>
+  </body>
+</html>
