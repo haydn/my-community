@@ -17,28 +17,25 @@
       }
     </script>
     <script type="text/javascript">
-      d3.selection.prototype.size = function() {
-        var n = 0;
-        this.each(function() { ++n; });
-        return n;
-      };
-    </script>
-    <script type="text/javascript">
       $(function() {
 
+        // SVG elements.
         var mapLayer = d3.select("#mapLayer");
-        var dataLayer = d3.select("#dataLayer");
+        var locator = d3.select("#locator");
+        var itemLayer = d3.select("#itemLayer");
+        // Inputs.
         var $form = $("#form");
-        var $main = $("#main");
         var $addressInput = $form.find("input[name='address']");
+        // Data.
+        var items = [];
+        var map = [];
+        var location = { latitude: -34.92862119999999, longitude: 138.5999594 };
+        // Helpers.
         var geocoder = new google.maps.Geocoder();
-        var allData = [];
-        var mapData = [];
-        // Default location is Adelaide.
-        var location = {
-          latitude: -34.92862119999999,
-          longitude: 138.5999594
-        };
+        var projection = d3.geo.mercator()
+          .center([ location.longitude, location.latitude ])
+          // .scale(1000);
+          .scale(100000);
 
         var distanceBetweenLocations = function(location1, location2) {
           var lat1 = Number(location1.latitude);
@@ -56,42 +53,39 @@
           return d;
         };
 
+        var positionSelection = function(selection) {
+          selection.attr("transform", function(d,i) {
+            var correctedLocation = projection([ d.longitude, d.latitude ]);
+            return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
+          });
+        };
+
         var update = function() {
 
-          // PREP DATA
-
-          allData.forEach(function(d) {
+          items.forEach(function(d) {
             d.distance = distanceBetweenLocations(location, d);
           });
 
-          nearByData = allData.filter(function(d) {
-            return d.distance < 10;
+          nearByData = items.filter(function(d) {
+            return d.distance < 10000;
           });
 
-          // REAL
-
-          var projection = d3.geo.mercator()
-            .center([location.longitude, location.latitude])
-            .rotate([0, 0])
-            .scale(80000);
-
-          var select = dataLayer.selectAll("g").data(nearByData, function(d) {
+          var select = itemLayer.selectAll("g").data(nearByData, function(d) {
             return d.id;
           });
 
-          var positionSelection = function(selection) {
-            selection.attr("transform", function(d,i) {
-              var correctedLocation = projection([ d.longitude, d.latitude ]);
-              return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
-            });
-          };
+          var entered = select.enter().append("g");
+
+          var exited = select.exit();
+
+          locator.attr("transform", function() {
+            var correctedLocation = projection([ location.longitude, location.latitude ]);
+            return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
+          });
 
           select
             .transition()
             .call(positionSelection);
-
-          var entered = select.enter().append("g");
-          var exited = select.exit();
 
           entered.call(positionSelection);
 
@@ -115,41 +109,24 @@
           }).append("circle")
             .attr("r", 10);
 
-          var inner = select.filter(function(d, i) {
-            return d.distance <= 5;
-          });
-
-          var outer = select.filter(function(d, i) {
-            return d.distance > 5;
-          });
-
-          inner.attr({
-            fill: "green"
-          }); //call(positionSelection);
-
-          outer.attr({
-            fill: "blue"
-          }); //.call(positionSelection);
-
           exited.remove();
 
-          var path = d3.geo.path().projection(projection);
-
           mapLayer.select("path")
-              .datum(mapData)
-              .attr("d", path)
-              .attr("fill", "#eee")
-              .attr("stroke", "#000");
+            .datum(map)
+            .attr("fill", "#eee")
+            .attr("stroke", "#000")
+            .attr("d", d3.geo.path().projection(projection));
         };
 
-        d3.csv("data/communities.csv", function(error, data) {
-        // d3.csv("data/example.csv", function(error, data) {
-          allData = allData.concat(data);
+        // d3.csv("data/communities.csv", function(error, data) {
+        d3.csv("data/example.csv", function(error, data) {
+          items = items.concat(data);
           update();
         });
 
-        d3.json("data/map.json", function(error, map) {
-          mapData = topojson.feature(map, map.objects.subunits);
+        d3.json("data/map.json", function(error, data) {
+        // d3.json("data/roads.json", function(error, data) {
+          map = topojson.feature(data, data.objects.subunits);
           update();
         });
 
@@ -182,13 +159,13 @@
       <input type="submit" value="Go"/>
     </form>
     <svg width="960" height="720">
-      <g id="mapLayer"><path/></g>
-      <g id="backgroundLayer">
-        <circle cx="480" cy="360" fill="black" r="5"/>
-        <circle cx="480" cy="360" fill="none" stroke="black" r="100"/>
-        <circle cx="480" cy="360" fill="none" stroke="black" r="200"/>
+      <g id="mapLayer">
+        <path fill="#eee" stroke="#000" />
       </g>
-      <g id="dataLayer"/>
+      <g id="itemLayer"/>
+      <g id="locator">
+        <circle cx="0" cy="0" fill="red" r="2"/>
+      </g>
     </svg>
   </body>
 </html>

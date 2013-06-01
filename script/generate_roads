@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ -f data/subunits.json ]
+  then
+    rm data/subunits.json
+fi
+
+ogr2ogr -f GeoJSON data/subunits.json data/MajorRoads.shp
+
+if [ -f data/subunits.json ]
+  then
+    topojson -o data/roads.json data/subunits.json
+fi
+
+if [ -f data/subunits.json ]
+  then
+    rm data/subunits.json
+fi
