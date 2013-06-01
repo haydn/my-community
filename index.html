@@ -122,21 +122,29 @@
           });
         };
 
-        var prepData = function() {
+        var prepData = function(filtered) {
 
           var data;
           var allowedTypes = [];
 
-          $panel.find("input[type='checkbox']:checked").each(function() {
-            allowedTypes.push($(this).val());
-          });
+          data = items;
 
-          data = items.filter(function(d) {
-              // return allowedTypes.indexOf(d.type) != -1;
-              return true;
-            }).map(function(d) {
+          if (filtered) {
+
+            $panel.find("input[type='checkbox']:checked").each(function() {
+              allowedTypes.push($(this).val());
+            });
+
+            data = data.filter(function(d) {
+                return allowedTypes.indexOf(d.type) != -1;
+              });
+          }
+
+          data = data.map(function(d) {
               return $.extend(d, { distance: distanceBetweenLocations(location, d) });
-            }).filter(function(d) {
+            });
+
+          data = data.filter(function(d) {
               return d.distance < 10000;
             });
 
@@ -166,7 +174,13 @@
 
         var updateItems = function(data) {
 
-          var groupSelection = itemLayer.selectAll("g").data(data).enter().append("g");
+          var groupSelection = itemLayer.selectAll("g").data(data, function(d) {
+            return d.key;
+          });
+
+          groupSelection.enter().append("g");
+          groupSelection.exit().remove();
+
           var itemSelection = groupSelection.selectAll("g").data(function(d) {
               return d.values;
             }, function(d) {
@@ -192,10 +206,10 @@
           entered
             .append("rect")
             .attr({
-              width: 20,
-              height: 20,
-              x: -10,
-              y: -10
+              width: 10,
+              height: 10,
+              x: -5,
+              y: -5
             });
 
           exited.remove();
@@ -222,22 +236,32 @@
 
         var update = function() {
 
-          var data = prepData();
+          // var data = prepData(items);
+          // var filteredData = filterData(data);
 
-          updatePanel(data);
-          updateItems(data);
+          updatePanel(prepData(false));
+          updateItems(prepData(true));
           updateProjection();
           updateMap();
 
         };
 
-        // d3.csv("data/processed/gazetter-sa.csv", function(error, data) {
-        // d3.csv("data/processed/adult-education.csv", function(error, data) {
-        d3.csv("data/processed/communities.csv", function(error, data) {
-        // d3.csv("data/processed/example.csv", function(error, data) {
+        d3.csv("data/processed/gazetter-sa.csv", function(error, data) {
           items = items.concat(data);
           update();
         });
+        d3.csv("data/processed/adult-education.csv", function(error, data) {
+          items = items.concat(data);
+          update();
+        });
+        d3.csv("data/processed/communities.csv", function(error, data) {
+          items = items.concat(data);
+          update();
+        });
+        // d3.csv("data/processed/example.csv", function(error, data) {
+        //   items = items.concat(data);
+        //   update();
+        // });
 
         d3.json("data/processed/map.json", function(error, data) {
         // d3.json("data/processed/roads.json", function(error, data) {
