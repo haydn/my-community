@@ -1,7 +1,8 @@
 // BASE - RESETS AND SETTINGS
-@import "base/normalise";
 @import "base/settings";
+@import "base/normalise";
 @import "base/mixins";
+@import "base/helpers";
 
 // REUSABLE COMPONENTS
 @import "components/nav";
@@ -9,7 +10,7 @@
 @import "components/community-details";
 @import "components/map";
 @import "components/around-me";
-// @import "components/location";
+@import "components/location";
 
 // PAGE LAYOUTS
 @import "layout/layout";

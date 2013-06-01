@@ -1,10 +1,37 @@
 .around-me {
   float: right;
-  margin-right: $space;
+  margin: $space;
   width: 590px;
   position: relative;
   z-index: 3;
+}
+
+.around-me--nav {
+  a {
+    background: #fff;
+    padding: $space;
+    color: #222;
+    display: block;
+    z-index: 4;
+    position: relative;
+    @include border-radius(10px 0 0 0);
+
+    &.around-me--nav--active {
+      color: #000;
+      z-index: 5;
+      margin-top: -$space;
+      padding: ($space*1.5) $space;
+    }
+  }
+  li + li a {
+    margin-left: -10px;
+  }
+}
+
+.around-me--section {
+  clear: both;
   background: #fff;
-  @include box-shadow(5px 5px 5px rgba(0,0,0,0.5));
   padding: $space;
+  @include box-shadow(5px 5px 5px rgba(0,0,0,0.5));
+  @include border-radius(0 10px 10px 10px);
 }
