@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    rm data/subunits.json
+    rm data/processed/subunits.json
 fi
 
-ogr2ogr -f GeoJSON data/subunits.json data/OpenMapData/shp/osm_line.shp
+ogr2ogr -f GeoJSON data/processed/subunits.json data/unprocessed/OpenMapData/shp/osm_line.shp
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    topojson -o data/roads.json data/subunits.json
+    topojson -o data/processed/roads.json data/processed/subunits.json
 fi
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    rm data/subunits.json
+    rm data/processed/subunits.json
 fi

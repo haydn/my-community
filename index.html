@@ -19,23 +19,22 @@
     <script type="text/javascript">
       $(function() {
 
-        // SVG elements.
+        // Elements.
         var mapLayer = d3.select("#mapLayer");
         var locator = d3.select("#locator");
         var itemLayer = d3.select("#itemLayer");
+        var panel = d3.select("#panel");
         // Inputs.
         var $form = $("#form");
         var $addressInput = $form.find("input[name='address']");
+        var $panel = $("#panel");
         // Data.
         var items = [];
         var map = [];
         var location = { latitude: -34.92862119999999, longitude: 138.5999594 };
         // Helpers.
         var geocoder = new google.maps.Geocoder();
-        var projection = d3.geo.mercator()
-          .center([ location.longitude, location.latitude ])
-          // .scale(1000);
-          .scale(1000000);
+        var projection;
 
         var itemTypes = {
           "Arts": function(selection) {
@@ -98,7 +97,7 @@
                 y: -10
               });
           }
-        }
+        };
 
         var distanceBetweenLocations = function(location1, location2) {
           var lat1 = Number(location1.latitude);
@@ -123,21 +122,51 @@
           });
         };
 
-        var update = function() {
+        var prepData = function() {
 
-          var data = items.map(function(d) {
-            return $.extend(d, { distance: distanceBetweenLocations(location, d) });
-          }).filter(function(d) {
-            return d.distance < 10000;
+          var data;
+          var allowedTypes = [];
+
+          $panel.find("input[type='checkbox']:checked").each(function() {
+            allowedTypes.push($(this).val());
           });
 
-          var nestedData = d3.nest()
+          data = items.filter(function(d) {
+              // return allowedTypes.indexOf(d.type) != -1;
+              return true;
+            }).map(function(d) {
+              return $.extend(d, { distance: distanceBetweenLocations(location, d) });
+            }).filter(function(d) {
+              return d.distance < 10000;
+            });
+
+          data = d3.nest()
             .key(function(d) {
               return d.type;
-            })
-            .entries(data);
+            }).entries(data);
 
-          var groupSelection = itemLayer.selectAll("g").data(nestedData).enter().append("g");
+          return data;
+
+        };
+
+        var updateProjection = function() {
+          projection = d3.geo.mercator()
+            .center([ location.longitude, location.latitude ])
+            // .scale(1000);
+            .scale(1000000);
+        };
+
+        var updateMap = function() {
+          mapLayer.select("path")
+            .datum(map)
+            .attr("fill", "#eee")
+            .attr("stroke", "#000")
+            .attr("d", d3.geo.path().projection(projection));
+        };
+
+        var updateItems = function(data) {
+
+          var groupSelection = itemLayer.selectAll("g").data(data).enter().append("g");
           var itemSelection = groupSelection.selectAll("g").data(function(d) {
               return d.values;
             }, function(d) {
@@ -159,15 +188,7 @@
 
           entered.call(positionSelection);
 
-          entered.call(function(d,i) {
-            d.type = "example";
-          });
-
-          // entered.each(function(d,i) {
-          //   // console.log(d);
-          //   // itemTypes[d.type](this);
-          // });
-
+          // TODO: Give a relevant icon.
           entered
             .append("rect")
             .attr({
@@ -179,24 +200,52 @@
 
           exited.remove();
 
-          mapLayer.select("path")
-            .datum(map)
-            .attr("fill", "#eee")
-            .attr("stroke", "#000")
-            .attr("d", d3.geo.path().projection(projection));
         };
 
-        d3.csv("data/gazetter_sa-sorted.csv", function(error, data) {
-        // d3.csv("data/adult-education.csv", function(error, data) {
-        // d3.csv("data/communities-2.csv", function(error, data) {
-        // d3.csv("data/example.csv", function(error, data) {
+        var updatePanel = function(data) {
+          panel.select("ul").selectAll("input").data(data)
+            .enter()
+            .append("li")
+            .append("label")
+            .text(function(d) {
+              return d.key;
+            })
+            .append("input")
+            .attr({
+              type: "checkbox",
+              value: function(d) {
+                return d.key;
+              },
+              checked: true
+            });
+        };
+
+        var update = function() {
+
+          var data = prepData();
+
+          updatePanel(data);
+          updateItems(data);
+          updateProjection();
+          updateMap();
+
+        };
+
+        // d3.csv("data/processed/gazetter-sa.csv", function(error, data) {
+        // d3.csv("data/processed/adult-education.csv", function(error, data) {
+        d3.csv("data/processed/communities.csv", function(error, data) {
+        // d3.csv("data/processed/example.csv", function(error, data) {
           items = items.concat(data);
           update();
         });
 
-        d3.json("data/map.json", function(error, data) {
-        // d3.json("data/roads.json", function(error, data) {
+        d3.json("data/processed/map.json", function(error, data) {
+        // d3.json("data/processed/roads.json", function(error, data) {
           map = topojson.feature(data, data.objects.subunits);
+          update();
+        });
+
+        $panel.on("change", "input[type='checkbox']", function() {
           update();
         });
 
@@ -217,7 +266,10 @@
           });
 
           event.preventDefault();
+
         });
+
+        updateProjection();
 
       });
 
@@ -228,7 +280,7 @@
       <input type="text" name="address"/>
       <input type="submit" value="Go"/>
     </form>
-    <svg width="960" height="720">
+    <svg width="960" height="720" style="float:left;">
       <g id="mapLayer">
         <path fill="#eee" stroke="#000" />
       </g>
@@ -237,5 +289,8 @@
         <circle cx="0" cy="0" fill="red" r="2"/>
       </g>
     </svg>
+    <div id="panel" style="position:absolute; top:20px; right:20px; width:300px; background:#ccc; padding: 10px;">
+      <ul/>
+    </div>
   </body>
 </html>

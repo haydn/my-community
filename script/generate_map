@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    rm data/subunits.json
+    rm data/processed/subunits.json
 fi
 
-# ogr2ogr -f GeoJSON data/subunits.json data/ne_10m_admin_0_map_subunits.shp
-ogr2ogr -f GeoJSON -where "adm0_a3 IN ('AUS')" data/subunits.json data/ne_10m_admin_0_map_subunits.shp
+# ogr2ogr -f GeoJSON data/processed/subunits.json data/unprocessed/ne_10m_admin_0_map_subunits.shp
+ogr2ogr -f GeoJSON -where "adm0_a3 IN ('AUS')" data/processed/subunits.json data/unprocessed/ne_10m_admin_0_map_subunits.shp
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    # topojson --id-property su_a3 -p name=NAME -p name --simplify-proportion 0.1 -o data/map.json data/subunits.json
-    # topojson -p name=NAME -p name --simplify-proportion 0.1 -o data/map.json data/subunits.json
-    topojson --id-property su_a3 -p name=NAME -p name -o data/map.json data/subunits.json
+    # topojson --id-property su_a3 -p name=NAME -p name --simplify-proportion 0.1 -o data/processed/map.json data/processed/subunits.json
+    # topojson -p name=NAME -p name --simplify-proportion 0.1 -o data/processed/map.json data/processed/subunits.json
+    topojson --id-property su_a3 -p name=NAME -p name -o data/processed/map.json data/processed/subunits.json
 fi
 
-if [ -f data/subunits.json ]
+if [ -f data/processed/subunits.json ]
   then
-    rm data/subunits.json
+    rm data/processed/subunits.json
 fi
