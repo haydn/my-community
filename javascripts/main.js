@@ -83,8 +83,8 @@ $(function() {
       // TODO: Make half the width of the SVG or something along those lines.
       .translate([ 480, 380])
       .center([ location.longitude, location.latitude ])
-      .scale(100000);
-      // .scale(1000000);
+      // .scale(100000);
+      .scale(1000000);
   };
 
   var updateMap = function() {
@@ -114,19 +114,12 @@ $(function() {
 
     var exited = itemSelection.exit();
 
-    locator.attr("transform", function() {
-      var correctedLocation = projection([ location.longitude, location.latitude ]);
-      return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
-    });
-
     itemSelection
       .transition()
       .call(positionSelection);
 
-    entered.call(positionSelection);
-
-    // TODO: Give a relevant icon.
     entered
+      .call(positionSelection)
       .append("image")
       .attr("xlink:href", function(d,i) {
         return types[d.type].icon;
@@ -167,6 +160,12 @@ $(function() {
     // var filteredData = filterData(data);
 
     updateProjection();
+
+    locator.attr("transform", function() {
+      var correctedLocation = projection([ location.longitude, location.latitude ]);
+      return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
+    });
+
     updatePanel(prepData(false));
     updateItems(prepData(true));
 
