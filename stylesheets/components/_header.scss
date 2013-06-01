@@ -1,0 +1,17 @@
+.header {
+  background: $tertiary-colour;
+  overflow: hidden;
+  color: #fff;
+
+  .logo {
+    float: left;
+    width: 238px;
+    height: 59px;
+    background: url("../images/layout/logo.gif") top left no-repeat;
+    text-indent: -9999px;
+  }
+
+  nav {
+    float: right;
+  }
+}
