@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+require 'json'
+
+if ARGV.empty? || ARGV.size < 2
+  puts "Usage ./convert.json.to.csv.rb input_file output_file"
+  exit
+end
+
+current_directory = Dir.pwd
+input_file  = File.join(current_directory, ARGV[0])
+output_file = File.join(current_directory, ARGV[1])
+
+CSV.open(output_file, "w") do |csv|
+
+  data = JSON.parse(File.open(input_file).read)
+
+  data["features"].each do |hash|
+    hash["properties"].values if hash.is_a?(Hash) && hash.has_key?("properties")
+  end
+
+end
