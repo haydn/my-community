@@ -180,7 +180,7 @@
           <h2>5000</h2>
           <nav class="nav">
             <ul>
-              <li><a href="#">People</a></li>
+              <li><a href="#" class="community-details--nav--active">People</a></li>
               <li><a href="#">Families</a></li>
               <li><a href="#">Dwellings</a></li>
             </ul>
@@ -240,49 +240,50 @@
     </section>
 
     <section class="map">
+      <div class="inner-wrapper">
+        <img src="images/layout/map-background.gif" class="map--background" />
 
-      <img src="#" class="map--background" />
+        <div class="map--radar">
+          <svg width="960" height="720">
+            <g id="backgroundLayer">
+              <circle cx="480" cy="360" fill="black" r="10"/>
+              <circle cx="480" cy="360" fill="none" stroke="black" r="100"/>
+              <circle cx="480" cy="360" fill="none" stroke="black" r="200"/>
+            </g>
+            <g id="dataLayer"/>
+          </svg>
+        </div>
 
-      <div class="map--radar">
-        <svg width="960" height="720">
-          <g id="backgroundLayer">
-            <circle cx="480" cy="360" fill="black" r="10"/>
-            <circle cx="480" cy="360" fill="none" stroke="black" r="100"/>
-            <circle cx="480" cy="360" fill="none" stroke="black" r="200"/>
-          </g>
-          <g id="dataLayer"/>
-        </svg>
-      </div>
+        <div class="around-me">
+          <nav class="around-me--nav nav nav-horizontal">
+            <ul>
+              <li><a href="#" class="around-me--nav--active">Around Me</a></li>
+              <li><a href="#">Help Others</a></li>
+              <li><a href="#">Ask for Help</a></li>
+            </ul>
+          </nav>
+          <div class="around-me--section" id="around-me--around-me">
+            <p>Find connections in your local area</p>
+            <div class="around-me--tickboxes">
 
-      <div class="around-me">
-        <nav class="around-me--nav">
-          <ul>
-            <li><a href="#" class="around-me--nav--active">Around Me</a></li>
-            <li><a href="#">Help Others</a></li>
-            <li><a href="#">Ask for Help</a></li>
-          </ul>
-        </nav>
-        <div class="around-me--section" id="around-me--around-me">
-          <p>Find connections in your local area</p>
-          <div class="around-me--tickboxes">
+              <span><i class="icon-arts">Arts</i></span>
+              <span><i class="icon-churches">Churches</i></span>
+              <span><i class="icon-social-clubs">Social Clubs</i></span>
+              <span><i class="icon-education">Education</i></span>
+              <span><i class="icon-libraries">Libraries</i></span>
+              <span><i class="icon-volunteering">Volunteering</i></span>
+              <span><i class="icon-sports">Sports</i></span>
+              <span><i class="icon-environment">Environment</i></span>
+              <span><i class="icon-events">Events</i></span>
 
-            <span><i class="icon-arts">Arts</i></span>
-            <span><i class="icon-churches">Churches</i></span>
-            <span><i class="icon-social-clubs">Social Clubs</i></span>
-            <span><i class="icon-education">Education</i></span>
-            <span><i class="icon-libraries">Libraries</i></span>
-            <span><i class="icon-volunteering">Volunteering</i></span>
-            <span><i class="icon-sports">Sports</i></span>
-            <span><i class="icon-environment">Environment</i></span>
-            <span><i class="icon-events">Events</i></span>
-
+            </div>
           </div>
-        </div>
-        <div class="around-me--section" id="around-me--help-others">
-          Help Others
-        </div>
-        <div class="around-me--section" id="around-me--ask-for-help">
-          Ask for Help
+          <div class="around-me--section" id="around-me--help-others">
+            Help Others
+          </div>
+          <div class="around-me--section" id="around-me--ask-for-help">
+            Ask for Help
+          </div>
         </div>
       </div>
 

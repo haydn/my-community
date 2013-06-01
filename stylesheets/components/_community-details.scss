@@ -2,6 +2,7 @@
   background: $secondary-colour;
   padding: $space;
   overflow: hidden;
+  text-transform: uppercase;
 
   .inner-wrapper {
     position: relative;
@@ -11,12 +12,27 @@
 .community-details--nav {
   float: left;
   width: 253px;
+
+  a {
+    margin-top: $small-space;
+    @include border-radius(4px);
+    padding: $small-space;
+    text-decoration: none;
+    color: #000;
+    display: inline-block;
+    font-size: 0.8em;
+
+    &.community-details--nav--active {
+      background: #ed1b24;
+      color: #fff;
+    }
+  }
 }
 
 .community-details--previous,
 .community-details--next {
   position: absolute;
-  top: 120px;
+  top: 69px;
   width: 20px;
   height: 20px;
   background: red;
@@ -35,6 +51,7 @@
 
   > div {
     float: left;
+    padding: 0 $space;
 
     &+div {
       border-left: 1px solid #000;
@@ -42,7 +59,7 @@
 
     > div {
       padding: $small-space;
-      width: 200px;
+      width: 235px;
       height: 80px;
     }
 
