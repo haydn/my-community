@@ -1,4 +1,15 @@
 .location {
   background: $secondary-colour;
   padding: $space;
+  overflow: hidden;
+}
+
+.location--type {
+  float: left;
+  width: 247px;
+}
+
+.location--description {
+  float: left;
+  width: 1337px - 247px;
 }

@@ -73,6 +73,9 @@ body {
 /* ==========================================================================
    Links
    ========================================================================== */
+a {
+  text-decoration: none; }
+
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
  */
@@ -89,13 +92,20 @@ a:hover {
 /* ==========================================================================
    Typography
    ========================================================================== */
+p {
+  margin: 0;
+  padding: 0 0 16px 0; }
+
 /**
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari 5, and Chrome.
  */
 h1 {
-  font-size: 2em;
-  margin: 0.67em 0; }
+  font-size: 2em; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0; }
 
 /**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
@@ -337,6 +347,127 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
+.clear {
+  clear: both; }
+
+/**
+* Whole
+*/
+.one-whole {
+  width: 100%; }
+
+/**
+* Halves
+*/
+.one-half, .two-quarters, .three-sixths, .four-eighths, .five-tenths, .six-twelfths {
+  width: 50%; }
+
+/**
+* Thirds
+*/
+.one-third, .two-sixths, .four-twelfths {
+  width: 33.333%; }
+
+.two-thirds, .four-sixths, .eight-twelfths {
+  width: 66.666%; }
+
+/**
+* Quarters
+*/
+.one-quarter, .two-eighths, .three-twelfths {
+  width: 25%; }
+
+.three-quarters, .six-eighths, .nine-twelfths {
+  width: 75%; }
+
+/**
+* Fifths
+*/
+.one-fifth, .two-tenths {
+  width: 20%; }
+
+.two-fifths, .four-tenths {
+  width: 40%; }
+
+.three-fifths, .six-tenths {
+  width: 60%; }
+
+.four-fifths, .eight-tenths {
+  width: 80%; }
+
+/**
+* Sixths
+*/
+.one-sixth, .two-twelfths {
+  width: 16.666%; }
+
+.five-sixths, .ten-twelfths {
+  width: 83.333%; }
+
+/**
+* Eighths
+*/
+.one-eighth {
+  width: 12.5%; }
+
+.three-eighths {
+  width: 37.5%; }
+
+.five-eighths {
+  width: 62.5%; }
+
+.seven-eighths {
+  width: 87.5%; }
+
+/**
+* Tenths
+*/
+.one-tenth {
+  width: 10%; }
+
+.three-tenths {
+  width: 30%; }
+
+.seven-tenths {
+  width: 70%; }
+
+.nine-tenths {
+  width: 90%; }
+
+/**
+* Twelfths
+*/
+.one-twelfth {
+  width: 8.333%; }
+
+.five-twelfths {
+  width: 41.666%; }
+
+.seven-twelfths {
+  width: 58.333%; }
+
+.eleven-twelfths {
+  width: 91.666%; }
+
+@media (max-width: 960px) {
+  .one-quarter, .two-eighths, .three-twelfths {
+    width: 100%; }
+
+  .one-half, .two-quarters, .three-sixths, .four-eighths, .five-tenths, .six-twelfths {
+    width: 100%;
+    float: none; } }
+@media (min-width: 500px) and (max-width: 960px) {
+  .one-quarter, .two-eighths, .three-twelfths {
+    width: 50%; }
+
+  .three-quarters, .six-eighths, .nine-twelfths {
+    width: 50%; } }
 .nav ul, .nav li {
   list-style: none;
   margin: 0;
@@ -390,8 +521,7 @@ table {
   position: absolute;
   top: 69px;
   width: 20px;
-  height: 20px;
-  background: red; }
+  height: 20px; }
 
 .community-details--previous {
   left: 240px; }
@@ -412,6 +542,9 @@ table {
       height: 80px; }
     .community-details--section > div > div:first-child {
       border-bottom: 1px solid #000; }
+  .community-details--section p {
+    padding: 0;
+    font-size: 0.8em; }
 
 .map {
   position: relative;
@@ -430,7 +563,7 @@ table {
 
 .around-me {
   float: right;
-  margin-right: 16px;
+  margin: 16px;
   width: 590px;
   position: relative;
   z-index: 3; }
@@ -441,12 +574,19 @@ table {
   color: #222;
   display: block;
   z-index: 4;
-  position: relative; }
-  .around-me--nav a + a {
-    margin-left: -10px; }
+  position: relative;
+  -webkit-border-radius: 10px 0 0 0;
+  -moz-border-radius: 10px 0 0 0;
+  -ms-border-radius: 10px 0 0 0;
+  -o-border-radius: 10px 0 0 0;
+  border-radius: 10px 0 0 0; }
   .around-me--nav a.around-me--nav--active {
     color: #000;
-    z-index: 5; }
+    z-index: 5;
+    margin-top: -16px;
+    padding: 24px 16px; }
+.around-me--nav li + li a {
+  margin-left: -10px; }
 
 .around-me--section {
   clear: both;
@@ -465,7 +605,16 @@ table {
 
 .location {
   background: whitesmoke;
-  padding: 16px; }
+  padding: 16px;
+  overflow: hidden; }
+
+.location--type {
+  float: left;
+  width: 247px; }
+
+.location--description {
+  float: left;
+  width: 1090px; }
 
 .inner-wrapper {
   width: 1337px;
