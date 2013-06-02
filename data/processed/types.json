@@ -4,7 +4,6 @@
   "Arts":                { "icon": "images/icons/default.svg",  "label": "Arts" },
   "Church":              { "icon": "images/icons/default.svg",  "label": "Church" },
   "Club":                { "icon": "images/icons/default.svg",  "label": "Club" },
-  "Education":           { "icon": "images/icons/default.svg",  "label": "Education" },
   "Library":             { "icon": "images/icons/default.svg",  "label": "Library" },
   "Sport":               { "icon": "images/icons/default.svg",  "label": "Sport" },
   "Volunteer":           { "icon": "images/icons/default.svg",  "label": "Volunteer" },
