@@ -1,0 +1,25 @@
+.community-navigation {
+  background: rgba(66,66,66,0.15);
+  overflow: hidden;
+}
+
+.community-navigation--details {
+  float: left; 
+  width: 323px;
+  padding: $space 0;
+
+  h1 {
+    
+  }
+  h2 {
+
+  }
+}
+
+.community-navigation--links {
+  a {
+    padding: $space;
+    display: block;
+    width: 324px;
+  }
+}

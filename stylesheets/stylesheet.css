@@ -476,18 +476,35 @@ table {
 .nav-horizontal ul, .nav-horizontal li {
   float: left; }
 
+.nav-primary {
+  display: none; }
+
 .header {
-  background: #848484;
+  background: rgba(14, 146, 148, 0.5);
   overflow: hidden;
   color: #fff; }
   .header .logo {
     float: left;
-    width: 238px;
-    height: 59px;
-    background: url("../images/layout/logo.gif") top left no-repeat;
+    width: 323px;
+    height: 55px;
+    background: url("../images/layout/logo.png") top left no-repeat;
     text-indent: -9999px; }
   .header nav {
     float: right; }
+
+.community-navigation {
+  background: rgba(66, 66, 66, 0.15);
+  overflow: hidden; }
+
+.community-navigation--details {
+  float: left;
+  width: 323px;
+  padding: 16px 0; }
+
+.community-navigation--links a {
+  padding: 16px;
+  display: block;
+  width: 324px; }
 
 .community-details {
   background: whitesmoke;
@@ -617,6 +634,20 @@ table {
   float: left;
   width: 1090px; }
 
+body {
+  background: url("../images/layout/background-texture.gif"); }
+
 .inner-wrapper {
-  width: 1337px;
+  width: 1296px;
   margin: 0 auto; }
+
+.layout--section-description {
+  clear: both;
+  padding: 16px 0;
+  overflow: hidden; }
+  .layout--section-description h2 {
+    float: left;
+    width: 323px; }
+  .layout--section-description p {
+    float: left;
+    width: 973px; }
