@@ -12,6 +12,31 @@
     <script type="text/javascript" src="javascripts/toRad.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/getParameterByName.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/map.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/get-involved/angular.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/get-involved/angular-resource.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/get-involved/project.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/get-involved/mongolab.js" charset="utf-8"></script>
+    <style type="text/css" media="screen">
+      .left {
+        float: left;
+        width: 60%;
+      }
+      .right {
+        float: left;
+        width: 30%;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+          $("body").on("click", ".toggle", function() {
+            $(".details").hide();
+            $(this).next(".details").toggle();
+          });
+        });
+    </script>
   </head>
   <body>
 
@@ -64,7 +89,68 @@
       <div class="explore--description layout--section-description">
         <div class="inner-wrapper">
           <h2>Connect</h2>
-          <p>..</p>
+
+          <div ng-app="project">
+            <div ng-controller="ListCtrl">
+              <div class="left">
+                <input type="text" ng-model="search" class="search-query" placeholder="Search">
+                <table>
+                  <tbody>
+                    <tr ng-repeat="project in projects | filter:search | orderBy:'title'">
+                      <td>
+                        <a class="toggle">{{project.title}}, {{project.location}}, {{project.type}}</a>
+                        <p class="details hidden">{{ project.description}}</p>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="right">
+                <form name="myForm">
+
+                  <div class="control-group" ng-class="{error: myForm.title.$invalid}">
+                    <label>Title</label>
+                    <input type="text" name="title" ng-model="project.title" required>
+                  </div>
+
+                  <div class="control-group" ng-class="{error: myForm.type.$invalid}">
+                    <label>Type</label>
+                    <select name="type" ng-model="project.type">
+                      <option value="Gardening">Gardening</option>
+                      <option value="Home maintenance">Home maintenance</option>
+                      <option value="Cooking">Cooking</option>
+                      <option value="Learning">Learning</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="control-group">
+                    <label>Name</label>
+                    <input type="text" name="name" ng-model="project.name">
+                  </div>
+
+                  <label>Description</label>
+                  <textarea name="description" ng-model="project.description"></textarea>
+
+                  <div class="control-group">
+                    <label>Location</label>
+                    <input type="text" name="location" ng-model="project.location">
+                  </div>
+
+                  <label>Contact</label>
+                  <textarea name="contact" ng-model="project.contact"></textarea>
+
+                  <br>
+                  <a href="#/" class="btn">Cancel</a>
+                  <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid"
+                          class="btn btn-primary">Save</button>
+                  <button ng-click="destroy()"
+                          ng-show="project._id" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
