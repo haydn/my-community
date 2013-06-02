@@ -13,7 +13,6 @@
   "GRDN":                { "icon": "images/icons/default.svg",  "label": "Garden" },
   "FTRY":                { "icon": "images/icons/default.svg",  "label": "Factory" },
   "PLN":                 { "icon": "images/icons/default.svg",  "label": "Plain" },
-  "ROAD":                { "icon": "images/icons/default.svg",  "label": "Walkway" },
   "RTRK":                { "icon": "images/icons/default.svg",  "label": "Racetrack" },
   "CRPK":                { "icon": "images/icons/default.svg",  "label": "Carpark" },
   "LAKE":                { "icon": "images/icons/default.svg",  "label": "Lake" },
