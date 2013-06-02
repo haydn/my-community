@@ -1,6 +1,12 @@
 .explore--map {
   overflow: hidden;
   position: relative;
+  svg {
+    display:block;
+    #itemLayer image {
+      cursor: pointer;
+    }
+  }
 }
 
 .explore--panel {
@@ -25,4 +31,9 @@
   li + li {
     margin-top: 5px;
   }
+}
+
+.explore--details {
+  padding: 20px 0;
+  min-height: 200px;
 }

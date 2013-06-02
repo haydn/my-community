@@ -691,6 +691,10 @@ table {
 .explore--map {
   overflow: hidden;
   position: relative; }
+  .explore--map svg {
+    display: block; }
+    .explore--map svg #itemLayer image {
+      cursor: pointer; }
 
 .explore--panel {
   border-radius: 5px;
@@ -711,6 +715,10 @@ table {
     padding: 0; }
   .explore--panel li + li {
     margin-top: 5px; }
+
+.explore--details {
+  padding: 20px 0;
+  min-height: 200px; }
 
 .intro {
   background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
