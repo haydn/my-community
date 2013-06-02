@@ -1,10 +1,23 @@
-{ "5000" : { "people" : { "residents" : { "australian_residents" : "6583",
-              "defacto" : "1129",
-              "married" : "2094",
+{ "5000" : { "people" : {
+							"australian_residents" : "6,583",
+              "defacto" : "1,129",
+              "married" : "2,094",
               "median_age" : "29",
-              "men" : "6704",
-              "not_married" : "6192",
-              "total" : "12637",
+              "men" : "6,704",
+              "not_married" : "6,192",
+              "total" : "1,2637",
               "weekly_income" : "498.00",
-              "women" : "5935"
-            } } } }
+              "women" : "5,935"
+            	},
+						"families" : {
+							"total" : "2,051",
+							"average_children_per_family" : "1.4",
+							"couple_family_without_children" : "1,267",
+							"couple_family_with_children" : "368",
+							"one_parent_family" : "246",
+							"other_family" : "170",
+							"single_male_parents" : "16.0%",
+							"single_female_parents" : "84.0%"
+            }
+          }
+}
