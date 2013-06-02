@@ -660,10 +660,11 @@ table {
   float: left;
   width: 1090px; }
 
-<<<<<<< HEAD
 .explore--map {
   overflow: hidden;
   position: relative; }
+  .explore--map svg {
+    display: block; }
 
 .explore--panel {
   border-radius: 5px;
@@ -684,7 +685,10 @@ table {
     padding: 0; }
   .explore--panel li + li {
     margin-top: 5px; }
-=======
+
+.explore--details {
+  min-height: 200px; }
+
 .intro {
   background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
   padding: 32px;
@@ -726,7 +730,6 @@ table {
     .connect-table td a {
       font-size: 1.2em;
       font-weight: bold; }
->>>>>>> 70a619b1988812d92cc979ff11f4f8a656298246
 
 body {
   background: url("../images/layout/background-texture.gif");
