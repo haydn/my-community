@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Knockout';
+  src: url("../fonts/Knockout-HTF26-JuniorFlyweight.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Knockout-HTF26-JuniorFlyweight.eot?#iefix") format("embedded-opentype"), url("../fonts/Knockout-HTF26-JuniorFlyweight.woff") format("woff"), url("../fonts/Knockout-HTF26-JuniorFlyweight.ttf") format("truetype"), url("../fonts/Knockout-HTF26-JuniorFlyweight.svg#svgFontName") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'Lubal';
+  src: url("../fonts/LubalGraBoo.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/LubalGraBoo.eot?#iefix") format("embedded-opentype"), url("../fonts/LubalGraBoo.woff") format("woff"), url("../fonts/LubalGraBoo.ttf") format("truetype"), url("../fonts/LubalGraBoo.svg#svgFontName") format("svg");
+  /* Legacy iOS */ }
+
 /* normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
@@ -500,6 +514,10 @@ table {
   float: left;
   width: 323px;
   padding: 16px 0; }
+  .community-navigation--details h1 {
+    font-family: "Knockout", arial, helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: 2.5em; }
 
 .community-navigation--links a {
   padding: 16px;
@@ -509,6 +527,10 @@ table {
   .community-navigation--links a.community-navigation--active {
     background: rgba(212, 73, 52, 0.3);
     color: #000; }
+  .community-navigation--links a h2 {
+    font-family: "Knockout", arial, helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: 2.5em; }
 
 .community-details {
   background: whitesmoke;
@@ -656,8 +678,34 @@ table {
   .home--form p {
     padding: 16px 0; }
 
+.connect-form {
+  background: #fff;
+  padding: 16px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -ms-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+  .connect-form label {
+    display: block;
+    padding: 16px 0 0 0; }
+
+.connect-table {
+  width: 623px;
+  float: left;
+  margin-right: 32px; }
+  .connect-table td {
+    border-bottom: 1px dotted #000;
+    border-width: 0 0 1px 0;
+    padding: 16px; }
+    .connect-table td a {
+      font-size: 1.2em;
+      font-weight: bold; }
+
 body {
-  background: url("../images/layout/background-texture.gif"); }
+  background: url("../images/layout/background-texture.gif");
+  font-family: "Lubal", arial, helvetica, sans-serif;
+  font-size: 23px; }
 
 .inner-wrapper {
   width: 1296px;

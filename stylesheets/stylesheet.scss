@@ -1,4 +1,5 @@
 // BASE - RESETS AND SETTINGS
+@import "base/fonts";
 @import "base/settings";
 @import "base/normalise";
 @import "base/mixins";
@@ -14,6 +15,7 @@
 @import "components/location";
 @import "components/explore";
 @import "components/home";
+@import "components/connect";
 
 // PAGE LAYOUTS
 @import "layout/layout";

@@ -89,12 +89,16 @@
       <div class="explore--description layout--section-description">
         <div class="inner-wrapper">
           <h2>Connect</h2>
-
+          <p>Offering help to others and receiving help when you need it is the basis of all strong communities. </p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="inner-wrapper">
           <div ng-app="project">
             <div ng-controller="ListCtrl">
               <div class="left">
                 <input type="text" ng-model="search" class="search-query" placeholder="Search">
-                <table>
+                <table class="connect-table">
                   <tbody>
                     <tr ng-repeat="project in projects | filter:search | orderBy:'title'">
                       <td>
@@ -105,7 +109,7 @@
                 </table>
               </div>
 
-              <div class="right">
+              <div class="right connect-form">
                 <form name="myForm">
 
                   <div class="control-group" ng-class="{error: myForm.title.$invalid}">
