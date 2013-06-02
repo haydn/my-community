@@ -181,11 +181,25 @@ $(function() {
       .enter()
       .append("li");
 
-    li
-      .append("label")
+    var label = li.append("label");
+
+    label
+      .append("img")
+      .attr({
+        src: function(d,i) {
+          return types[d.key].icon;
+        },
+        width: 20,
+        height: 20
+      });
+
+    label
+      .append("span")
       .text(function(d) {
         return types[d.key].label;
-      })
+      });
+
+    label
       .append("input")
       .attr({
         type: "checkbox",
@@ -197,15 +211,6 @@ $(function() {
         update();
       });
 
-    li
-      .append("img")
-      .attr({
-        src: function(d,i) {
-          return types[d.key].icon;
-        },
-        width: 20,
-        height: 20
-      });
   };
 
   var setLocationToAddress = function(address) {
