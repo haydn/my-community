@@ -1,4 +1,28 @@
-
 .explore--map {
-  // position: relative;
+  overflow: hidden;
+  position: relative;
+}
+
+.explore--panel {
+  border-radius: 5px;
+  padding:20px;
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:300px;
+  background:#fff;
+  max-height:100%;
+  line-height: 30px;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    margin: 0;
+    padding: 0;
+  }
+  li + li {
+    margin-top: 5px;
+  }
 }
