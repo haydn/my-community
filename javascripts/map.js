@@ -118,6 +118,8 @@ $(function() {
 
       details.selectAll("*").remove();
 
+      details.transition().style("background", types[d.type].color);
+
       details.append("img").attr({
         src: types[d.type].icon,
         height: 20,
