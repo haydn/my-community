@@ -2,9 +2,11 @@ $(function() {
 
   // Elements.
   var mapLayer = d3.select("#mapLayer");
-  var locator = d3.select("#locator");
+  var roadLayer = d3.select("#roadLayer");
   var itemLayer = d3.select("#itemLayer");
+  var locator = d3.select("#locator");
   var panel = d3.select("#panel");
+  var details = d3.select("#details");
   // Inputs.
   var $form = $("#form");
   var $addressInput = $form.find("input[name='address']");
@@ -94,7 +96,7 @@ $(function() {
       .datum(map)
       .attr("d", d3.geo.path().projection(projection));
 
-    d3.select("#roadLayer").select("path")
+    roadLayer.select("path")
       .datum(roads)
       .attr("d", d3.geo.path().projection(projection));
   };
@@ -136,6 +138,39 @@ $(function() {
         x: -10,
         y: -10
       });
+
+    entered.on("click", function(d) {
+
+      details.selectAll("*").remove();
+
+      details.append("img").attr({
+        src: types[d.type].icon,
+        height: 20,
+        width: 20
+      });
+      details.append("p").text("type: "+d.type+" ("+types[d.type].label+")");
+      details.append("p").text("title: "+d.title);
+
+      if (d.address) {
+        details.append("p").text("address: "+d.address);
+      }
+      if (d.description) {
+        details.append("p").text("description: "+d.description);
+      }
+      if (d.website) {
+        details.append("p").text("website: "+d.website);
+      }
+      if (d.phone) {
+        details.append("p").text("phone: "+d.phone);
+      }
+
+      itemSelection.select("*").attr("transform", null);
+
+      d3.select(this).select("*").attr("transform", function() {
+        return "scale(2 2)";
+      });
+
+    });
 
     exited.remove();
 
