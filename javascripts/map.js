@@ -2,9 +2,11 @@ $(function() {
 
   // Elements.
   var mapLayer = d3.select("#mapLayer");
-  var locator = d3.select("#locator");
+  var roadLayer = d3.select("#roadLayer");
   var itemLayer = d3.select("#itemLayer");
+  var locator = d3.select("#locator");
   var panel = d3.select("#panel");
+  var details = d3.select("#details");
   // Inputs.
   var $form = $("#form");
   var $addressInput = $form.find("input[name='address']");
@@ -44,7 +46,7 @@ $(function() {
     });
   };
 
-  var prepData = function(filtered) {
+  var prepData = function() {
 
     var data;
     var allowedTypes = [];
@@ -53,29 +55,13 @@ $(function() {
       return !!types[d.type];
     });
 
-    if (filtered) {
+    $panel.find("input[type='checkbox']:checked").each(function() {
+      allowedTypes.push($(this).val());
+    });
 
-      $panel.find("input[type='checkbox']:checked").each(function() {
-        allowedTypes.push($(this).val());
+    data = data.filter(function(d) {
+        return allowedTypes.indexOf(d.type) != -1;
       });
-
-      data = data.filter(function(d) {
-          return allowedTypes.indexOf(d.type) != -1;
-        });
-    }
-
-    // data = data.map(function(d) {
-    //     return $.extend(d, { distance: distanceBetweenLocations(location, d) });
-    //   });
-    //
-    // data = data.filter(function(d) {
-    //     return d.distance < 10000;
-    //   });
-
-    data = d3.nest()
-      .key(function(d) {
-        return d.type;
-      }).entries(data);
 
     return data;
 
@@ -94,23 +80,14 @@ $(function() {
       .datum(map)
       .attr("d", d3.geo.path().projection(projection));
 
-    d3.select("#roadLayer").select("path")
+    roadLayer.select("path")
       .datum(roads)
       .attr("d", d3.geo.path().projection(projection));
   };
 
   var updateItems = function(data) {
 
-    var groupSelection = itemLayer.selectAll("g").data(data, function(d) {
-      return d.key;
-    });
-
-    groupSelection.enter().append("g");
-    groupSelection.exit().remove();
-
-    var itemSelection = groupSelection.selectAll("g").data(function(d) {
-        return d.values;
-      }, function(d) {
+    var itemSelection = itemLayer.selectAll("g").data(data, function(d) {
         return d.id;
       });
 
@@ -124,7 +101,7 @@ $(function() {
 
     entered
       .call(positionSelection)
-      .attr("id", function(d){
+      .attr("id", function(d) {
         return d.id;
       })
       .append("image")
@@ -137,6 +114,39 @@ $(function() {
         y: -10
       });
 
+    entered.on("click", function(d) {
+
+      details.selectAll("*").remove();
+
+      details.append("img").attr({
+        src: types[d.type].icon,
+        height: 20,
+        width: 20
+      });
+      details.append("p").text("type: "+d.type+" ("+types[d.type].label+")");
+      details.append("p").text("title: "+d.title);
+
+      if (d.address) {
+        details.append("p").text("address: "+d.address);
+      }
+      if (d.description) {
+        details.append("p").text("description: "+d.description);
+      }
+      if (d.website) {
+        details.append("p").text("website: "+d.website);
+      }
+      if (d.phone) {
+        details.append("p").text("phone: "+d.phone);
+      }
+
+      itemSelection.select("*").attr("transform", null);
+
+      d3.select(this).select("*").attr("transform", function() {
+        return "scale(2 2)";
+      });
+
+    });
+
     exited.remove();
 
   };
@@ -146,37 +156,56 @@ $(function() {
       .enter()
       .append("li");
 
-    li
-      .append("label")
-      .text(function(d) {
-        return types[d.key].label;
-      })
-      .append("input")
-      .attr({
-        type: "checkbox",
-        value: function(d) {
-          return d.key;
-        },
-        checked: true
-      }).on("change", function(d,i) {
-        update();
-      });
+    var label = li.append("label");
 
-    li
+    label
       .append("img")
       .attr({
         src: function(d,i) {
-          return types[d.key].icon;
+          return d.icon;
         },
         width: 20,
         height: 20
       });
+
+    label
+      .append("span")
+      .text(function(d) {
+        return d.label;
+      });
+
+    label
+      .append("input")
+      .attr({
+        type: "checkbox",
+        value: function(d) {
+          return d.id;
+        },
+        checked: true
+      }).on("change", function(d,i) {
+        updateItems(prepData());
+      });
+
+  };
+
+  var setLocationToAddress = function(address) {
+    geocoder.geocode({ address: address }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0] && results[0].geometry && results[0].geometry.location) {
+          location = {
+            latitude: results[0].geometry.location.jb,
+            longitude: results[0].geometry.location.kb
+          };
+          update();
+          updateMap();
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
   };
 
   var update = function() {
-
-    // var data = prepData(items);
-    // var filteredData = filterData(data);
 
     updateProjection();
 
@@ -185,8 +214,12 @@ $(function() {
       return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
     });
 
-    updatePanel(prepData(false));
-    updateItems(prepData(true));
+    var a = _.map(types, function(v,k) {
+      return _.extend(v, { id: k });
+    });
+
+    updatePanel(a);
+    updateItems(prepData());
 
   };
 
@@ -204,10 +237,10 @@ $(function() {
     update();
   });
 
-  // d3.csv("data/processed/communities.csv", function(error, data) {
-  //   items = items.concat(data);
-  //   update();
-  // });
+  d3.csv("data/processed/communities.csv", function(error, data) {
+    items = items.concat(data);
+    update();
+  });
 
   // d3.csv("data/processed/example.csv", function(error, data) {
   //   items = items.concat(data);
@@ -233,25 +266,15 @@ $(function() {
     update();
     updateMap();
 
-    geocoder.geocode({ address: $addressInput.val() }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results[0] && results[0].geometry && results[0].geometry.location) {
-          location = {
-            latitude: results[0].geometry.location.jb,
-            longitude: results[0].geometry.location.kb
-          };
-          update();
-          updateMap();
-        }
-      } else {
-        alert("Geocoder failed due to: " + status);
-      }
-    });
+    setLocationToAddress($addressInput.val());
 
     event.preventDefault();
 
   });
 
-  updateProjection();
+  $addressInput.val(getParameterByName("address"));
+  $scaleInput.val(scale);
+
+  setLocationToAddress(getParameterByName("address"));
 
 });

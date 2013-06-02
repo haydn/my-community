@@ -559,7 +559,8 @@ table {
 .map--radar {
   float: left;
   width: 40%;
-  z-index: 2; }
+  z-index: 2;
+  position: relative; }
 
 .around-me {
   float: right;
