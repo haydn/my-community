@@ -60,7 +60,7 @@
     > div {
       padding: $small-space;
       width: 290px;
-      height: 100px;
+      height: 120px;
     }
 
     > div:first-child {
@@ -76,5 +76,29 @@
     padding: 0;
     font-family: $header-font;
     font-size: 1.2em;
+  }
+}
+
+$community-highlight: #c2793b;
+.community-details--highlight {
+  padding: $small-space;
+  background: $community-highlight;
+  margin-right: $small-space;
+  color: #fff;
+  @include border-radius(3px);
+}
+.community-colour {
+  color: $community-highlight;
+}
+
+.community-details--section {
+  .icon-families {
+    background: url("../images/icons/learn-married.png") bottom right no-repeat;
+  }
+  .icon-singles {
+   background: url("../images/icons/learn-single.png") bottom right no-repeat; 
+  }
+  .icon-australia {
+    background: url("../images/icons/learn-map.png") bottom right no-repeat;
   }
 }
