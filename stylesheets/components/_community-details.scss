@@ -47,6 +47,7 @@
 
 .community-details--section {
   float: left;
+  text-transform: uppercase;
 
   > div {
     float: left;
@@ -59,7 +60,7 @@
     > div {
       padding: $small-space;
       width: 290px;
-      height: 80px;
+      height: 100px;
     }
 
     > div:first-child {
@@ -67,9 +68,13 @@
     }
   }
 
+  h3 {
+    font-size: 1.5em;
+  }
+
   p {
     padding: 0;
-    font-size: 0.8em;
     font-family: $header-font;
+    font-size: 1.2em;
   }
 }

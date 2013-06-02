@@ -367,6 +367,9 @@ table {
 .fr {
   float: right; }
 
+.padding-r-space {
+  padding-right: 16px; }
+
 .clear {
   clear: both; }
 
@@ -573,7 +576,8 @@ table {
   right: 0; }
 
 .community-details--section {
-  float: left; }
+  float: left;
+  text-transform: uppercase; }
   .community-details--section > div {
     float: left;
     padding: 0 16px; }
@@ -582,13 +586,15 @@ table {
     .community-details--section > div > div {
       padding: 8px;
       width: 290px;
-      height: 80px; }
+      height: 100px; }
     .community-details--section > div > div:first-child {
       border-bottom: 1px dotted #000; }
+  .community-details--section h3 {
+    font-size: 1.5em; }
   .community-details--section p {
     padding: 0;
-    font-size: 0.8em;
-    font-family: "Knockout", arial, helvetica, sans-serif; }
+    font-family: "Knockout", arial, helvetica, sans-serif;
+    font-size: 1.2em; }
 
 .map {
   position: relative;
