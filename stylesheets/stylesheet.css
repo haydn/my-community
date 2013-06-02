@@ -693,9 +693,12 @@ table {
   .explore--panel li + li {
     margin-top: 5px; }
 
+<<<<<<< HEAD
 .explore--details {
   min-height: 200px; }
 
+=======
+>>>>>>> 98258f98a90183ecfd53a0cd7e2503505dede18f
 .intro {
   background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
   padding: 32px;
