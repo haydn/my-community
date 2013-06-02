@@ -208,6 +208,23 @@ $(function() {
       });
   };
 
+  var setLocationToAddress = function(address) {
+    geocoder.geocode({ address: address }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0] && results[0].geometry && results[0].geometry.location) {
+          location = {
+            latitude: results[0].geometry.location.jb,
+            longitude: results[0].geometry.location.kb
+          };
+          update();
+          updateMap();
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  };
+
   var update = function() {
 
     // var data = prepData(items);
@@ -268,25 +285,15 @@ $(function() {
     update();
     updateMap();
 
-    geocoder.geocode({ address: $addressInput.val() }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results[0] && results[0].geometry && results[0].geometry.location) {
-          location = {
-            latitude: results[0].geometry.location.jb,
-            longitude: results[0].geometry.location.kb
-          };
-          update();
-          updateMap();
-        }
-      } else {
-        alert("Geocoder failed due to: " + status);
-      }
-    });
+    setLocationToAddress($addressInput.val());
 
     event.preventDefault();
 
   });
 
-  updateProjection();
+  $addressInput.val(getParameterByName("address"));
+  $scaleInput.val(scale);
+
+  setLocationToAddress(getParameterByName("address"));
 
 });

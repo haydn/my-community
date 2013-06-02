@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>My Community</title>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdMu7yxgGE_OGV8wzfAGPs3XmP-5NlMGc&sensor=true" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/topojson.v1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/toRad.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/getParameterByName.js" charset="utf-8"></script>
+    <script type="text/javascript" src="javascripts/map.js" charset="utf-8"></script>
+    <style type="text/css" media="screen">
+    html,body {padding:0;margin:0;height:100%;}
+    </style>
+  </head>
+  <body>
+    <svg width="100%" height="100%" style="float:left;">
+      <g id="mapLayer">
+        <path fill="#eee" stroke="#000" />
+      </g>
+      <g id="roadLayer">
+        <path stroke="#ccc" fill="none" stroke-width="5"/>
+      </g>
+      <g id="itemLayer"/>
+      <g id="locator">
+        <circle cx="0" cy="0" fill="red" r="4"/>
+      </g>
+    </svg>
+    <form id="form" style="position:absolute; top:0; left:0; width:100%; background:#ccc;">
+      <input type="text" name="address"/>
+      <input type="text" name="scale"/>
+      <input type="submit" value="Go"/>
+    </form>
+    <div id="panel" style="position:absolute; top:20px; right:20px; width:300px; background:#ccc;">
+      <ul/>
+    </div>
+    <div id="details"  style="position:absolute; bottom:0; left:0; width:100%; background:#ccc;">
+    </div>
+  </body>
+</html>
