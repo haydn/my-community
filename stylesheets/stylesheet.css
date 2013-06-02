@@ -761,7 +761,11 @@ table {
     padding: 16px; }
     .connect-table td a {
       font-size: 1.2em;
-      font-weight: bold; }
+      font-weight: bold;
+      cursor: pointer; }
+
+.connect--search {
+  margin-left: 16px; }
 
 body {
   background: url("../images/layout/background-texture.gif");
