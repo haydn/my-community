@@ -9,7 +9,9 @@
   padding: $space 0;
 
   h1 {
-    
+    font-family: $header-font;
+    text-transform: uppercase;
+    font-size: 2.5em;
   }
   h2 {
 
@@ -26,6 +28,12 @@
     &.community-navigation--active { 
       background: rgba(212,73,52,0.3);
       color: #000;
+    }
+
+    h2 {
+      font-family: $header-font;
+      text-transform: uppercase;
+      font-size: 2.5em;
     }
   }
 }

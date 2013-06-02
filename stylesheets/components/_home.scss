@@ -1,0 +1,22 @@
+.intro {
+  background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
+  padding: $large-space;
+  text-align: center;
+}
+
+.intro--logo {
+  background: url("../images/layout/logo-large.png") top left no-repeat;
+  width: 770px;
+  height: 129px;
+  text-indent: -9999px;
+  margin: 0 auto;
+}
+
+.home--form {
+  text-align: center;
+  padding: $space;
+
+  p {
+    padding: $space 0;
+  }
+}
