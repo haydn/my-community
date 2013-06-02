@@ -678,6 +678,30 @@ table {
   .home--form p {
     padding: 16px 0; }
 
+.connect-form {
+  background: #fff;
+  padding: 16px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -ms-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+  .connect-form label {
+    display: block;
+    padding: 16px 0 0 0; }
+
+.connect-table {
+  width: 623px;
+  float: left;
+  margin-right: 32px; }
+  .connect-table td {
+    border-bottom: 1px dotted #000;
+    border-width: 0 0 1px 0;
+    padding: 16px; }
+    .connect-table td a {
+      font-size: 1.2em;
+      font-weight: bold; }
+
 body {
   background: url("../images/layout/background-texture.gif");
   font-family: "Lubal", arial, helvetica, sans-serif;

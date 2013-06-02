@@ -1,0 +1,27 @@
+.connect-form {
+  background: #fff;
+  padding: $space;
+  @include box-shadow(0 0 5px rgba(0,0,0,0.5));
+
+  label {
+    display: block;
+    padding: $space 0 0 0;
+  }
+}
+
+.connect-table {
+  width: 623px;
+  float: left; 
+  margin-right: $large-space;
+
+  td {
+    border-bottom: 1px dotted #000;
+    border-width: 0 0 1px 0;
+    padding: $space;
+
+    a {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+}
