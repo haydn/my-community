@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <title>My Community</title>
+    <link rel="stylesheet" href="stylesheets/stylesheet.css" />
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdMu7yxgGE_OGV8wzfAGPs3XmP-5NlMGc&sensor=true" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/topojson.v1.min.js" charset="utf-8"></script>
@@ -10,12 +11,26 @@
     <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
   </head>
   <body>
-    <form action="map.html">
-      My name is
-      <input type="text" name="name" placeholder="Jane"/>.
-      My address is
-      <input type="text" name="address" value="Adelaide, SA" readonly="true"/>.
-      <input type="submit" value="Go"/>
-    </form>
+    
+    <section class="intro">
+      <div class="inner-wrapper">
+        <div class="intro--logo">My Community</div>
+        <div class="intro--text">
+          <p>We think community is about more than simply living in the same geographic region. If you want to get involved with your community but don't know how, enter you address below and we'll help you connect. </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home--form">
+      <div class="inner-wrapper">
+        <form action="explore.html" class="home--form">
+          <p>Your Name</p>
+          <input type="text" name="name" placeholder="Jane"/>
+          <p>street address, suburb or postcode</p>
+          <input type="text" name="address" value="Adelaide, SA" readonly="true"/>
+          <input type="submit" value="Go"/>
+        </form>
+      </div>
+    </section>
   </body>
 </html>

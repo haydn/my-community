@@ -108,20 +108,20 @@ $(function() {
       .attr("xlink:href", function(d,i) {
         return types[d.type].icon;
       }).attr({
-        width: 20,
-        height: 20,
-        x: -10,
-        y: -10
+        width: 30,
+        height: 30,
+        x: -15,
+        y: -15
       });
 
     entered.on("click", function(d) {
 
       details.selectAll("*").remove();
 
+      details.transition().style("background", types[d.type].color);
+
       details.append("img").attr({
-        src: types[d.type].icon,
-        height: 20,
-        width: 20
+        src: types[d.type].icon
       });
       details.append("p").text("type: "+d.type+" ("+types[d.type].label+")");
       details.append("p").text("title: "+d.title);
@@ -164,8 +164,7 @@ $(function() {
         src: function(d,i) {
           return d.icon;
         },
-        width: 20,
-        height: 20
+        width: 30
       });
 
     label

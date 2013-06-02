@@ -1,0 +1,39 @@
+.community-navigation {
+  background: rgba(66,66,66,0.15);
+  overflow: hidden;
+}
+
+.community-navigation--details {
+  float: left; 
+  width: 323px;
+  padding: $space 0;
+
+  h1 {
+    font-family: $header-font;
+    text-transform: uppercase;
+    font-size: 2.5em;
+  }
+  h2 {
+
+  }
+}
+
+.community-navigation--links {
+  a {
+    padding: $space;
+    display: block;
+    width: 324px;
+    color: #75726e;
+
+    &.community-navigation--active { 
+      background: rgba(212,73,52,0.3);
+      color: #000;
+    }
+
+    h2 {
+      font-family: $header-font;
+      text-transform: uppercase;
+      font-size: 2.5em;
+    }
+  }
+}

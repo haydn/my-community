@@ -1,4 +1,30 @@
+body {
+  background: url("../images/layout/background-texture.gif");
+  font-family: $body-font;
+  font-size: 23px;
+}
+
 .inner-wrapper {
-  width: 1337px;
+  width: 1296px;
   margin: 0 auto;
+}
+
+.layout--section {
+  
+}
+
+.layout--section-description {
+  clear: both;
+  padding: $space 0;
+  overflow: hidden;
+
+  h2 {
+    float: left; 
+    width: 323px;
+  }
+
+  p {
+    float: left;
+    width: 973px;
+  }
 }

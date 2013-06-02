@@ -1,12 +1,11 @@
 {
-  "RESV":                { "icon": "images/icons/default.svg",  "label": "Reserve" },
-  "GRDN":                { "icon": "images/icons/default.svg",  "label": "Garden" },
-  "Arts":                { "icon": "images/icons/default.svg",  "label": "Arts" },
-  "Church":              { "icon": "images/icons/default.svg",  "label": "Church" },
-  "Club":                { "icon": "images/icons/default.svg",  "label": "Club" },
-  "Education":           { "icon": "images/icons/default.svg",  "label": "Education" },
-  "Library":             { "icon": "images/icons/default.svg",  "label": "Library" },
-  "Sport":               { "icon": "images/icons/default.svg",  "label": "Sport" },
-  "Volunteer":           { "icon": "images/icons/default.svg",  "label": "Volunteer" },
-  "Adult Education":     { "icon": "images/icons/default.svg",  "label": "Adult Education" }
+  "RESV":                { "icon": "images/icons/icon-parks-reserves.png",  "label": "Parks and Reserve",          "color": "#adda94" },
+  "GRDN":                { "icon": "images/icons/icon-gardens.png",  "label": "Garden",           "color": "#b7dfa0" },
+  "Arts":                { "icon": "images/icons/icon-arts.png",  "label": "Arts",             "color": "#eeb887" },
+  "Church":              { "icon": "images/icons/icon-cross.png",  "label": "Church",           "color": "#e971ad" },
+  "Club":                { "icon": "images/icons/icon-social-clubs.png",  "label": "Social Clubs",             "color": "#c586af" },
+  "Library":             { "icon": "images/icons/icon-libraries.png",  "label": "Libraries",          "color": "#c9cb86" },
+  "Sport":               { "icon": "images/icons/icon-sports.png",  "label": "Sport",            "color": "#e59285" },
+  "Volunteer":           { "icon": "images/icons/icon-volunteer.png",  "label": "Volunteer",        "color": "#e8c09b" },
+  "Adult Education":     { "icon": "images/icons/icon-education.png",  "label": "Adult Education",  "color": "#a6c8b4" }
 }

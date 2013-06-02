@@ -1,13 +1,13 @@
 .header {
-  background: $tertiary-colour;
+  background: rgba(14,146,148,0.5);
   overflow: hidden;
   color: #fff;
 
   .logo {
     float: left;
-    width: 238px;
-    height: 59px;
-    background: url("../images/layout/logo.gif") top left no-repeat;
+    width: 323px;
+    height: 55px;
+    background: url("../images/layout/logo.png") top left no-repeat;
     text-indent: -9999px;
   }
 
