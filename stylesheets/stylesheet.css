@@ -667,6 +667,31 @@ table {
   float: left;
   width: 1090px; }
 
+<<<<<<< HEAD
+.explore--map {
+  overflow: hidden;
+  position: relative; }
+
+.explore--panel {
+  border-radius: 5px;
+  padding: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background: #fff;
+  max-height: 100%;
+  line-height: 30px; }
+  .explore--panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+  .explore--panel li {
+    margin: 0;
+    padding: 0; }
+  .explore--panel li + li {
+    margin-top: 5px; }
+=======
 .intro {
   background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
   padding: 32px;
@@ -708,6 +733,7 @@ table {
     .connect-table td a {
       font-size: 1.2em;
       font-weight: bold; }
+>>>>>>> 70a619b1988812d92cc979ff11f4f8a656298246
 
 body {
   background: url("../images/layout/background-texture.gif");

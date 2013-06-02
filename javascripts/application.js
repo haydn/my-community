@@ -3,7 +3,7 @@ $(function() {
 	$.getJSON("data/processed/abs.json")
 	.done(function( json ) {
 	  console.log( "JSON Data: " + json );
-	  var data = json["5000"]["people"]["residents"];
+	  var data = json["5000"]["people"];
 	  $("#resident-total").text(data.total);
 	  $("#resident-australian-residents").text(data.australian_residents);
 	  $("#resident-de-facto").text(data.defacto);
