@@ -11,7 +11,6 @@
     <script type="text/javascript" src="javascripts/underscore.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/toRad.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/getParameterByName.js" charset="utf-8"></script>
-    <script type="text/javascript" src="javascripts/map.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/get-involved/angular.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/get-involved/angular-resource.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="javascripts/get-involved/project.js" charset="utf-8"></script>
@@ -103,7 +102,11 @@
                     <tr ng-repeat="project in projects | filter:search | orderBy:'title'">
                       <td>
                         <a class="toggle">{{project.title}}, {{project.type}}, {{project.location}}</a>
-                        <p class="details hidden">{{ project.description}}</p>
+                        <div class="details hidden">
+                          <p>{{project.description}}</p>
+                          <p>To contact: {{project.contact}}</p>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -367,6 +367,9 @@ table {
 .fr {
   float: right; }
 
+.padding-r-space {
+  padding-right: 16px; }
+
 .clear {
   clear: both; }
 
@@ -573,21 +576,25 @@ table {
   right: 0; }
 
 .community-details--section {
-  float: left; }
+  float: left;
+  text-transform: uppercase; }
   .community-details--section > div {
     float: left;
     padding: 0 16px; }
     .community-details--section > div + div {
-      border-left: 1px solid #000; }
+      border-left: 1px dotted #000; }
     .community-details--section > div > div {
       padding: 8px;
-      width: 235px;
-      height: 80px; }
+      width: 290px;
+      height: 100px; }
     .community-details--section > div > div:first-child {
-      border-bottom: 1px solid #000; }
+      border-bottom: 1px dotted #000; }
+  .community-details--section h3 {
+    font-size: 1.5em; }
   .community-details--section p {
     padding: 0;
-    font-size: 0.8em; }
+    font-family: "Knockout", arial, helvetica, sans-serif;
+    font-size: 1.2em; }
 
 .map {
   position: relative;
@@ -660,6 +667,31 @@ table {
   float: left;
   width: 1090px; }
 
+<<<<<<< HEAD
+.explore--map {
+  overflow: hidden;
+  position: relative; }
+
+.explore--panel {
+  border-radius: 5px;
+  padding: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background: #fff;
+  max-height: 100%;
+  line-height: 30px; }
+  .explore--panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+  .explore--panel li {
+    margin: 0;
+    padding: 0; }
+  .explore--panel li + li {
+    margin-top: 5px; }
+=======
 .intro {
   background: url("../images/layout/intro-bar.gif") bottom left repeat-x;
   padding: 32px;
@@ -701,6 +733,7 @@ table {
     .connect-table td a {
       font-size: 1.2em;
       font-weight: bold; }
+>>>>>>> 70a619b1988812d92cc979ff11f4f8a656298246
 
 body {
   background: url("../images/layout/background-texture.gif");

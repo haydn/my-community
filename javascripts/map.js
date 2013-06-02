@@ -8,9 +8,6 @@ $(function() {
   var panel = d3.select("#panel");
   var details = d3.select("#details");
   // Inputs.
-  var $form = $("#form");
-  var $addressInput = $form.find("input[name='address']");
-  var $scaleInput = $form.find("input[name='scale']");
   var $panel = $("#panel");
   // Data.
   var types = [];
@@ -18,7 +15,7 @@ $(function() {
   var map = [];
   var roads = [];
   var location = { latitude: -34.92862119999999, longitude: 138.5999594 };
-  var scale = 1000000;
+  var scale = 1500000;
   // Helpers.
   var geocoder = new google.maps.Geocoder();
   var projection;
@@ -139,7 +136,7 @@ $(function() {
         details.append("p").text("phone: "+d.phone);
       }
 
-      itemSelection.select("*").attr("transform", null);
+      itemLayer.selectAll("g").select("*").attr("transform", null);
 
       d3.select(this).select("*").attr("transform", function() {
         return "scale(2 2)";
@@ -159,6 +156,18 @@ $(function() {
     var label = li.append("label");
 
     label
+      .append("input")
+      .attr({
+        type: "checkbox",
+        value: function(d) {
+          return d.id;
+        },
+        checked: true
+      }).on("change", function(d,i) {
+        updateItems(prepData());
+      });
+
+    label
       .append("img")
       .attr({
         src: function(d,i) {
@@ -171,18 +180,6 @@ $(function() {
       .append("span")
       .text(function(d) {
         return d.label;
-      });
-
-    label
-      .append("input")
-      .attr({
-        type: "checkbox",
-        value: function(d) {
-          return d.id;
-        },
-        checked: true
-      }).on("change", function(d,i) {
-        updateItems(prepData());
       });
 
   };
@@ -257,22 +254,6 @@ $(function() {
     updateProjection();
     updateMap();
   });
-
-  $form.find("input[type='submit']").on("click", function(event) {
-
-    scale = Number($scaleInput.val());
-
-    update();
-    updateMap();
-
-    setLocationToAddress($addressInput.val());
-
-    event.preventDefault();
-
-  });
-
-  $addressInput.val(getParameterByName("address"));
-  $scaleInput.val(scale);
 
   setLocationToAddress(getParameterByName("address"));
 

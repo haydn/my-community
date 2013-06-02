@@ -64,10 +64,11 @@
       <div class="explore--description layout--section-description">
         <div class="inner-wrapper">
           <h2>Explore</h2>
-          <p>There are many activities and groups around yout hat you may not even know about. Getting involved with a local group is a great way to meet people in your community.</p>
+          <p>There are many activities and groups around you that you may not even know about. Getting involved with a local group is a great way to meet people in your community.</p>
         </div>
       </div>
       <div class="explore--map">
+
         <svg width="100%" height="100%" style="float:left;">
           <g id="mapLayer">
             <path fill="#eee" stroke="#000" />
@@ -77,17 +78,14 @@
           </g>
           <g id="itemLayer"/>
           <g id="locator">
-            <circle cx="0" cy="0" fill="red" r="4"/>
+            <image xlink:href="images/icons/icon-me.png" width="41" height="41" x="-20" y="-20"/>
           </g>
         </svg>
-
-        <div class="inner-wrapper">
-          <div id="panel" style="position:absolute; top:275px; right:20px; width:300px; background:#ccc; max-height:100%; overflow:scroll;">
-            <ul/>
-          </div>
-          <div id="details"  style="position:absolute; bottom:0; left:0; width:100%; background:#ccc;">
-          </div>
+        <div id="panel" class="explore--panel">
+          <ul/>
         </div>
+        <div id="details"></div>
+
       </div>
     </section>
 
