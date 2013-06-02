@@ -113,27 +113,33 @@ $(function() {
 
     entered.on("click", function(d) {
 
-      details.selectAll("*").remove();
+      var innerDiv = details.select("div");
+
+      innerDiv.selectAll("*").remove();
 
       details.transition().style("background", types[d.type].color);
 
-      details.append("img").attr({
+      innerDiv.append("img").attr({
         src: types[d.type].icon
+      }).style({
+        "float": "left",
+        "margin-right": "20px"
       });
-      details.append("p").text("type: "+d.type+" ("+types[d.type].label+")");
-      details.append("p").text("title: "+d.title);
+
+      innerDiv.append("p").text(d.title);
+      innerDiv.append("p").text(types[d.type].label);
 
       if (d.address) {
-        details.append("p").text("address: "+d.address);
+        innerDiv.append("p").text(d.address);
       }
       if (d.description) {
-        details.append("p").text("description: "+d.description);
+        innerDiv.append("p").html(d.description);
       }
       if (d.website) {
-        details.append("p").text("website: "+d.website);
+        innerDiv.append("p").append("a").attr("href", d.website).text(d.website);
       }
       if (d.phone) {
-        details.append("p").text("phone: "+d.phone);
+        innerDiv.append("p").text(d.phone);
       }
 
       itemLayer.selectAll("g").select("*").attr("transform", null);
