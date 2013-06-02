@@ -102,7 +102,11 @@
                     <tr ng-repeat="project in projects | filter:search | orderBy:'title'">
                       <td>
                         <a class="toggle">{{project.title}}, {{project.type}}, {{project.location}}</a>
-                        <p class="details hidden">{{ project.description}}</p>
+                        <div class="details hidden">
+                          <p>{{project.description}}</p>
+                          <p>To contact: {{project.contact}}</p>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
