@@ -237,10 +237,10 @@ $(function() {
     update();
   });
 
-  // d3.csv("data/processed/communities.csv", function(error, data) {
-  //   items = items.concat(data);
-  //   update();
-  // });
+  d3.csv("data/processed/communities.csv", function(error, data) {
+    items = items.concat(data);
+    update();
+  });
 
   // d3.csv("data/processed/example.csv", function(error, data) {
   //   items = items.concat(data);
