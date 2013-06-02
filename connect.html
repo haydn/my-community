@@ -32,8 +32,8 @@
     <script type="text/javascript" charset="utf-8">
         $(function() {
           $("body").on("click", ".toggle", function() {
-            $(".details").hide();
-            $(this).next(".details").toggle();
+            $(".details").slideUp();
+            $(this).next(".details").slideDown();
           });
         });
     </script>
