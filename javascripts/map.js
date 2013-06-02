@@ -46,7 +46,7 @@ $(function() {
     });
   };
 
-  var prepData = function(filtered) {
+  var prepData = function() {
 
     var data;
     var allowedTypes = [];
@@ -55,29 +55,13 @@ $(function() {
       return !!types[d.type];
     });
 
-    if (filtered) {
+    $panel.find("input[type='checkbox']:checked").each(function() {
+      allowedTypes.push($(this).val());
+    });
 
-      $panel.find("input[type='checkbox']:checked").each(function() {
-        allowedTypes.push($(this).val());
+    data = data.filter(function(d) {
+        return allowedTypes.indexOf(d.type) != -1;
       });
-
-      data = data.filter(function(d) {
-          return allowedTypes.indexOf(d.type) != -1;
-        });
-    }
-
-    // data = data.map(function(d) {
-    //     return $.extend(d, { distance: distanceBetweenLocations(location, d) });
-    //   });
-    //
-    // data = data.filter(function(d) {
-    //     return d.distance < 10000;
-    //   });
-
-    data = d3.nest()
-      .key(function(d) {
-        return d.type;
-      }).entries(data);
 
     return data;
 
@@ -103,16 +87,7 @@ $(function() {
 
   var updateItems = function(data) {
 
-    var groupSelection = itemLayer.selectAll("g").data(data, function(d) {
-      return d.key;
-    });
-
-    groupSelection.enter().append("g");
-    groupSelection.exit().remove();
-
-    var itemSelection = groupSelection.selectAll("g").data(function(d) {
-        return d.values;
-      }, function(d) {
+    var itemSelection = itemLayer.selectAll("g").data(data, function(d) {
         return d.id;
       });
 
@@ -126,7 +101,7 @@ $(function() {
 
     entered
       .call(positionSelection)
-      .attr("id", function(d){
+      .attr("id", function(d) {
         return d.id;
       })
       .append("image")
@@ -187,7 +162,7 @@ $(function() {
       .append("img")
       .attr({
         src: function(d,i) {
-          return types[d.key].icon;
+          return d.icon;
         },
         width: 20,
         height: 20
@@ -196,7 +171,7 @@ $(function() {
     label
       .append("span")
       .text(function(d) {
-        return types[d.key].label;
+        return d.label;
       });
 
     label
@@ -204,11 +179,11 @@ $(function() {
       .attr({
         type: "checkbox",
         value: function(d) {
-          return d.key;
+          return d.id;
         },
         checked: true
       }).on("change", function(d,i) {
-        update();
+        updateItems(prepData());
       });
 
   };
@@ -232,9 +207,6 @@ $(function() {
 
   var update = function() {
 
-    // var data = prepData(items);
-    // var filteredData = filterData(data);
-
     updateProjection();
 
     locator.attr("transform", function() {
@@ -242,8 +214,12 @@ $(function() {
       return "translate("+correctedLocation[0]+","+correctedLocation[1]+")";
     });
 
-    updatePanel(prepData(false));
-    updateItems(prepData(true));
+    var a = _.map(types, function(v,k) {
+      return _.extend(v, { id: k });
+    });
+
+    updatePanel(a);
+    updateItems(prepData());
 
   };
 
