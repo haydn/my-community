@@ -96,7 +96,7 @@
           <div ng-app="project">
             <div ng-controller="ListCtrl">
               <div class="left">
-                <input type="text" ng-model="search" class="search-query" placeholder="Search">
+                <input type="text" ng-model="search" class="search-query connect--search" placeholder="Search">
                 <table class="connect-table">
                   <tbody>
                     <tr ng-repeat="project in projects | filter:search | orderBy:'title'">
