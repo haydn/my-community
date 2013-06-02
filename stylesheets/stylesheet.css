@@ -504,7 +504,11 @@ table {
 .community-navigation--links a {
   padding: 16px;
   display: block;
-  width: 324px; }
+  width: 324px;
+  color: #75726e; }
+  .community-navigation--links a.community-navigation--active {
+    background: rgba(212, 73, 52, 0.3);
+    color: #000; }
 
 .community-details {
   background: whitesmoke;
