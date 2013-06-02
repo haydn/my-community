@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
     <script src="javascripts/get-involved/angular.min.js"></script>
     <script src="javascripts/get-involved/angular-resource.min.js"></script>
     <script src="javascripts/get-involved/project.js"></script>
@@ -18,14 +19,16 @@
           <tr>
             <th>Title</th>
             <th>Location</th>
-            <th><a href="#/new">New</a></th>
+            <th>Type</th>
+            <th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
           </tr>
           </thead>
           <tbody>
           <tr ng-repeat="project in projects | filter:search | orderBy:'name'">
-            <td><a href="#/show/{{project._id.$oid}}">{{project.name}}</a></td>
+            <td><a href="#/show/{{project._id.$oid}}">{{project.title}}</a></td>
             <td>{{project.location}}</td>
-            <td><a href="#/edit/{{project._id.$oid}}">Edit</a></td>
+            <td>{{project.type}}</td>
+            <td><a href="#/edit/{{project._id.$oid}}"><i class="icon-pencil"></i></a></td>
           </tr>
           </tbody>
         </table>
@@ -34,24 +37,40 @@
       <!-- CACHE FILE: new.html -->
       <script type="text/ng-template" id="form.html">
         <form name="myForm">
-          <div class="control-group" ng-class="{error: myForm.name.$invalid}">
-            <label>Name</label>
-            <input type="text" name="name" ng-model="project.name" required>
-            <span ng-show="myForm.name.$error.required" class="help-inline">
+
+          <div class="control-group" ng-class="{error: myForm.title.$invalid}">
+            <label>Title</label>
+            <input type="text" name="title" ng-model="project.title" required>
+            <span ng-show="myForm.title.$error.required" class="help-inline">
                 Required</span>
           </div>
 
-          <div class="control-group" ng-class="{error: myForm.site.$invalid}">
-            <label>Website</label>
-            <input type="url" name="site" ng-model="project.site" required>
-            <span ng-show="myForm.site.$error.required" class="help-inline">
-                Required</span>
-            <span ng-show="myForm.site.$error.url" class="help-inline">
-                Not a URL</span>
+          <div class="control-group" ng-class="{error: myForm.type.$invalid}">
+            <label>Type</label>
+            <select name="type" ng-model="project.type">
+              <option value="Gardening">Gardening</option>
+              <option value="Home maintenance">Home maintenance</option>
+              <option value="Cooking">Cooking</option>
+              <option value="Learning">Learning</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
 
           <label>Description</label>
           <textarea name="description" ng-model="project.description"></textarea>
+
+          <div class="control-group">
+            <label>Name</label>
+            <input type="text" name="name" ng-model="project.name">
+          </div>
+
+          <label>Contact</label>
+          <textarea name="contact" ng-model="project.contact"></textarea>
+
+          <div class="control-group">
+            <label>Location</label>
+            <input type="text" name="location" ng-model="project.location">
+          </div>
 
           <br>
           <a href="#/" class="btn">Cancel</a>
@@ -65,12 +84,15 @@
       <!-- CACHE FILE: detail.html -->
       <script type="text/ng-template" id="detail.html">
         <div>Name: {{project.name}}</div>
+        <div>Title: {{project.title}}</div>
         <div>Description: {{project.description}}</div>
+        <div>Location: {{project.location}}</div>
+        <div>Type: {{project.type}}</div>
+        <div>Contact: {{project.contact}}</div>
+        <div>Name: {{project.name}}</div>
 
-        <br>
+        <br />
         <a href="#/" class="btn">Back</a>
-        <button ng-click="destroy()"
-                ng-show="project._id" class="btn btn-danger">Delete</button>
       </script>
     </div>
   </body>

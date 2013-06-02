@@ -1,4 +1,3 @@
-// This is a module for cloud persistance in mongolab - https://mongolab.com
 angular.module('mongolab', ['ngResource']).
     factory('Project', function($resource) {
       var Project = $resource('https://api.mongolab.com/api/1/databases' +
@@ -19,5 +18,3 @@ angular.module('mongolab', ['ngResource']).
 
       return Project;
     });
-
-    // https://api.mongolab.com/api/1/databases/my-community/collections?apiKey=AF-jDz3QvTMrBRbAh09TS85kN8hLgg6T
